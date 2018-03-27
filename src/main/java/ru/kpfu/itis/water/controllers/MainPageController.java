@@ -23,7 +23,7 @@ public class MainPageController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String getMainPage(@ModelAttribute("model")ModelMap model) {
-        model.addAttribute("news", newsService.getAllNews());
+        model.addAttribute("news", newsService.getLastNews(3));
         return "main-page";
     }
 }
