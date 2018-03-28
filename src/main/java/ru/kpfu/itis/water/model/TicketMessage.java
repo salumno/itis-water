@@ -3,7 +3,7 @@ package ru.kpfu.itis.water.model;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Date;
 
 /**
  * Created by Melnikov Semen
@@ -18,16 +18,23 @@ import java.util.List;
 @EqualsAndHashCode
 
 @Entity
-@Table(name = "\"user\"")
-public class User {
+public class TicketMessage {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    @Column(length = 500)
+    private String text;
 
-    private String surname;
+    @OneToOne
+    @JoinColumn(name = "author_id")
+    private User author;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "author")
-    private List<Ticket> tickets;
+    @Temporal(TemporalType.DATE)
+    private Date date;
+
+    @ManyToOne
+    @JoinColumn(name = "ticket_id")
+    private Ticket ticket;
 }

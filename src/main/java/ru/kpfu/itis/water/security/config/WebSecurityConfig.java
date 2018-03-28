@@ -25,21 +25,22 @@ import javax.sql.DataSource;
 @ComponentScan("ru.kpfu.itis.water")
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
+    @Autowired
     private UserDetailsService userDetailsService;
-    private AuthenticationProvider authenticationProvider;
-    private DataSource dataSource;
 
-    public WebSecurityConfig(UserDetailsService userDetailsService, AuthenticationProvider authenticationProvider, DataSource dataSource) {
-        this.userDetailsService = userDetailsService;
-        this.authenticationProvider = authenticationProvider;
-        this.dataSource = dataSource;
-    }
+    @Autowired
+    private AuthenticationProvider authenticationProvider;
+
+    @Autowired
+    private DataSource dataSource;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
+                .antMatchers("/admin/*").hasAuthority("ADMIN")
+                .antMatchers("/user/*").authenticated()
                 .antMatchers("/registration").permitAll()
-                .antMatchers("/css/**").permitAll()
+                .antMatchers("/css/*").permitAll()
                 .antMatchers("/").permitAll()
                 .and()
                 .formLogin().loginPage("/login")
