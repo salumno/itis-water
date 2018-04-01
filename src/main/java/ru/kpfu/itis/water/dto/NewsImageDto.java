@@ -1,6 +1,5 @@
 package ru.kpfu.itis.water.dto;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.*;
 import ru.kpfu.itis.water.model.FileInfo;
 import ru.kpfu.itis.water.model.NewsImage;

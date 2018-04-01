@@ -32,7 +32,7 @@ public class TicketController {
 
     @RequestMapping(value = "/tickets/{id}", method = RequestMethod.GET)
     public String getTicketPage(@PathVariable("id") Long ticketId, @ModelAttribute("model")ModelMap model) {
-        model.addAttribute("ticket", ticketService.getTicketById(ticketId));
+        model.addAttribute("ticket", ticketService.getTicketById(ticketId).orElse(null));
         return "ticket-page";
     }
 
