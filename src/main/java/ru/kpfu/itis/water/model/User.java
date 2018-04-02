@@ -1,6 +1,7 @@
 package ru.kpfu.itis.water.model;
 
 import lombok.*;
+import ru.kpfu.itis.water.security.roles.UserRole;
 
 import javax.persistence.*;
 import java.util.List;
@@ -27,6 +28,9 @@ public class User {
     private String name;
 
     private String surname;
+
+    @Enumerated(EnumType.STRING)
+    private UserRole role;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "author")
     private List<Ticket> tickets;

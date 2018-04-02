@@ -21,10 +21,13 @@ public class UserDto {
 
     private String surname;
 
+    private String role;
+
     private UserDto(User user) {
         id = user.getId();
         name = user.getName();
         surname = user.getSurname();
+        role = user.getRole().toString();
     }
 
     public static UserDto createOnTicketMessage(User user) {
