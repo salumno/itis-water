@@ -34,4 +34,7 @@ public class User {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "author")
     private List<Ticket> tickets;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private List<Appointment> appointments;
 }
