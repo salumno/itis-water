@@ -7,6 +7,12 @@
 </head>
 <body>
 <div class="container">
+    <#if error??>
+        <div class="alert alert-success alert-dismissible">
+            <a href="" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Что-то пошло не так!</strong> ${error}.
+        </div>
+    </#if>
     <form method="post" action="/user/appointment-form">
         <div class="form-group">
             <select class="form-control" name="depId">
