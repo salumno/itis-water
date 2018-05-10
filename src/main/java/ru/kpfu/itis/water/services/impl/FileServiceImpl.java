@@ -3,10 +3,10 @@ package ru.kpfu.itis.water.services.impl;
 import lombok.SneakyThrows;
 import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Service;
-import ru.kpfu.itis.water.model.AppointmentDoc;
+import ru.kpfu.itis.water.model.Appointment;
 import ru.kpfu.itis.water.model.FileInfo;
 import ru.kpfu.itis.water.model.Image;
-import ru.kpfu.itis.water.repositories.AppointmentDocRepository;
+import ru.kpfu.itis.water.repositories.AppointmentRepository;
 import ru.kpfu.itis.water.repositories.ImageRepository;
 import ru.kpfu.itis.water.services.FileService;
 
@@ -23,20 +23,20 @@ import java.io.InputStream;
 @Service
 public class FileServiceImpl implements FileService {
 
-    private AppointmentDocRepository appointmentDocRepository;
     private ImageRepository imageRepository;
+    private AppointmentRepository appointmentRepository;
 
-    public FileServiceImpl(AppointmentDocRepository appointmentDocRepository, ImageRepository imageRepository) {
-        this.appointmentDocRepository = appointmentDocRepository;
+    public FileServiceImpl(ImageRepository imageRepository, AppointmentRepository appointmentRepository) {
         this.imageRepository = imageRepository;
+        this.appointmentRepository = appointmentRepository;
     }
 
     @Override
-    public void writeAppointmentDocToResponse(Long appointmentDocId, HttpServletResponse response) {
-        AppointmentDoc appointmentDoc = appointmentDocRepository.findById(appointmentDocId).orElseThrow(
-                () -> new IllegalArgumentException("Appointment document with id: " + appointmentDocId + " not found.")
+    public void writeAppointmentDocToResponse(Long appointmentId, HttpServletResponse response) {
+        Appointment appointment = appointmentRepository.findById(appointmentId).orElseThrow(
+                () -> new IllegalArgumentException("Appointment document with id: " + appointmentId + " not found.")
         );
-        writeFileToResponse(appointmentDoc.getFileInfo(), response);
+        writeFileToResponse(appointment.getDoc().getFileInfo(), response);
     }
 
     @Override

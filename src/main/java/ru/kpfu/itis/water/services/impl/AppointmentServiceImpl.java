@@ -4,6 +4,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import ru.kpfu.itis.water.form.AppointmentAddForm;
 import ru.kpfu.itis.water.model.*;
+import ru.kpfu.itis.water.repositories.AppointmentDocRepository;
 import ru.kpfu.itis.water.repositories.AppointmentRepository;
 import ru.kpfu.itis.water.repositories.DepartmentRepository;
 import ru.kpfu.itis.water.services.AppointmentService;
@@ -21,12 +22,14 @@ import java.time.LocalDateTime;
 public class AppointmentServiceImpl implements AppointmentService {
 
     private AppointmentRepository appointmentRepository;
+    private AppointmentDocRepository appointmentDocRepository;
     private DepartmentRepository departmentRepository;
     private AuthenticationUtil authenticationUtil;
     private AppointmentDocsGenerator appointmentDocsGenerator;
 
-    public AppointmentServiceImpl(AppointmentRepository appointmentRepository, DepartmentRepository departmentRepository, AuthenticationUtil authenticationUtil, AppointmentDocsGenerator appointmentDocsGenerator) {
+    public AppointmentServiceImpl(AppointmentRepository appointmentRepository, AppointmentDocRepository appointmentDocRepository, DepartmentRepository departmentRepository, AuthenticationUtil authenticationUtil, AppointmentDocsGenerator appointmentDocsGenerator) {
         this.appointmentRepository = appointmentRepository;
+        this.appointmentDocRepository = appointmentDocRepository;
         this.departmentRepository = departmentRepository;
         this.authenticationUtil = authenticationUtil;
         this.appointmentDocsGenerator = appointmentDocsGenerator;
@@ -45,10 +48,18 @@ public class AppointmentServiceImpl implements AppointmentService {
                 .department(department)
                 .dateTime(calculateAppointmentTime())
                 .build();
-        AppointmentDoc appointmentDoc = generateDoc(appointment);
-        appointment.setDoc(appointmentDoc);
         appointmentRepository.save(appointment);
         return appointment;
+    }
+
+    @Override
+    public void generateDocForAppointment(Long appointmentId) {
+        Appointment appointment = appointmentRepository.findById(appointmentId).orElseThrow(
+                () -> new IllegalArgumentException("Appointment with id: " + appointmentId + " not found.")
+        );
+        AppointmentDoc doc = generateDoc(appointment);
+        appointment.setDoc(doc);
+        appointmentRepository.save(appointment);
     }
 
     private String generateAppointmentCode(Department department, User user) {
@@ -64,6 +75,8 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     private AppointmentDoc generateDoc(Appointment appointment) {
         FileInfo docFileInfo = appointmentDocsGenerator.generateDocByAppointment(appointment);
-        return AppointmentDoc.builder().fileInfo(docFileInfo).build();
+        AppointmentDoc doc =  AppointmentDoc.builder().fileInfo(docFileInfo).build();
+        appointmentDocRepository.save(doc);
+        return doc;
     }
 }

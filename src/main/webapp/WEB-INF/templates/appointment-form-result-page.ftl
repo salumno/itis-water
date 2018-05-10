@@ -36,7 +36,7 @@
         </tr>
         </tbody>
     </table>
-    <a href="/file/appointment-doc/${appointment.doc.id}" class="btn btn-default" role="button" download><span class="glyphicon glyphicon-download"></span></a>
+    <a href="/file/appointment/${appointment.id}" class="btn btn-default" role="button" download><span class="glyphicon glyphicon-download"></span></a>
     <a class="btn btn-default" href="/user/profile">В личный кабинет</a>
 </div>
 </body>

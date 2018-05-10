@@ -10,4 +10,6 @@ import ru.kpfu.itis.water.model.Appointment;
  */
 public interface AppointmentService {
     Appointment registerUserToAppointment(AppointmentAddForm departmentId, Authentication authentication);
+
+    void generateDocForAppointment(Long appointmentId);
 }
