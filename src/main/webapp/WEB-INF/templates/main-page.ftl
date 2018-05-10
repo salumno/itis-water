@@ -1,3 +1,4 @@
+<#ftl encoding='UTF-8'>
 <html>
 <head>
     <title>Водоканал мистера Ланштейна</title>
@@ -26,6 +27,13 @@
                             <div class="col-md-12">
                                 <p>${newsElem.text}</p>
                             </div>
+                        </div>
+                        <div class="row">
+                            <#list newsElem.newsImages as image>
+                                <div class="col-md-4">
+                                    <img src="/file/image/${image.id}" height="100" width="100">
+                                </div>
+                            </#list>
                         </div>
                     </div>
                 </#list>

@@ -12,7 +12,17 @@
     <div id="ticket-messages">
         <#list model.ticket.messages as message>
             <div class="panel">
-                <div class="panel-heading">
+                <#if message.author.role == 'ADMIN'>
+                <div class="panel-heading panel-info">
+                    <div class="pull-right">
+                        <p>${message.author.surname} ${message.author.name} (Admin)</p>
+                    </div>
+                    <div class="pull-left">
+                        <p>${message.date}</p>
+                    </div>
+                </div>
+                <#else>
+                <div class="panel-heading panel-success">
                     <div class="pull-left">
                         <p>${message.author.surname} ${message.author.name}</p>
                     </div>
@@ -20,6 +30,7 @@
                         <p>${message.date}</p>
                     </div>
                 </div>
+                </#if>
                 <div class="panel-body">
                     <p>${message.text}</p>
                 </div>
@@ -68,21 +79,41 @@
         var ticketMessages = data;
         for (var i = 0; i < ticketMessages.length; i++) {
             var message = ticketMessages[i];
-            $('#ticket-messages').append(
-                '<div class="panel">' +
-                    '<div class="panel-heading">' +
-                        '<div class="pull-left">' +
-                            '<p>' + message.author.surname + ' ' + message.author.name + '</p>' +
-                        '</div>' +
-                        '<div class="pull-right">' +
-                            '<p>' + message.date + '</p>' +
-                        '</div>' +
-                    '</div>' +
-                    '<div class="panel-body">' +
-                        '<p>' + message.text + '</p>' +
-                    '</div>' +
-                '</div>'
-            );
+            var role = message.author.role;
+            if (role === 'ADMIN') {
+                $('#ticket-messages').append(
+                        '<div class="panel">' +
+                            '<div class="panel-heading panel-info">' +
+                                '<div class="pull-right">' +
+                                    '<p>' + message.author.surname + ' ' + message.author.name + ' (Admin)</p>' +
+                                '</div>' +
+                                '<div class="pull-left">' +
+                                    '<p>' + message.date + '</p>' +
+                                '</div>' +
+                            '</div>' +
+                            '<div class="panel-body">' +
+                                '<p>' + message.text + '</p>' +
+                            '</div>' +
+                        '</div>'
+                );
+            } else {
+                $('#ticket-messages').append(
+                        '<div class="panel">' +
+                            '<div class="panel-heading panel-success">' +
+                                '<div class="pull-left">' +
+                                    '<p>' + message.author.surname + ' ' + message.author.name + '</p>' +
+                                '</div>' +
+                                '<div class="pull-right">' +
+                                    '<p>' + message.date + '</p>' +
+                                '</div>' +
+                            '</div>' +
+                            '<div class="panel-body">' +
+                                '<p>' + message.text + '</p>' +
+                            '</div>' +
+                        '</div>'
+                );
+            }
+
         }
     }
 </script>
