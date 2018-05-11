@@ -13,13 +13,48 @@
             <p>${ticket.date}</p>
         </div>
         <div class="pull-right">
-            <a href="/user/tickets/${ticket.id}">${ticket.status}</a>
+            <select id="select-status" onchange="statusChanged(${ticket.id})">
+                <#list model.statuses as status>
+                    <#if status = ticket.status>
+                        <option value="${status}" selected>${status}</option>
+                    <#else>
+                        <option value="${status}">${status}</option>
+                    </#if>
+                </#list>
+            </select>
         </div>
     </div>
     <div class="panel-body">
-        <p>${ticket.text}</p>
+        <div class="row">
+            <div class="col-md-11">
+                <p>${ticket.text}</p>
+            </div>
+            <div class="col-md-1">
+                <a href="/user/tickets/${ticket.id}"><span class="glyphicon glyphicon-chevron-right"></span></a>
+            </div>
+        </div>
     </div>
 </div>
 </#list>
+
+<script>
+    function statusChanged(ticketId) {
+        var data = new FormData();
+        data.append("ticketId", ticketId);
+        data.append("status", $('#select-status').val());
+
+        $.ajax({
+            url: '/api/admin/tickets/status',
+            type: 'POST',
+            data: data,
+            enctype: 'multipart/form-data',
+            processData: false,
+            contentType: false,
+            error: function () {
+                console.log('statusChanged method has produced this error.')
+            }
+        });
+    }
+</script>
 </body>
 </html>
