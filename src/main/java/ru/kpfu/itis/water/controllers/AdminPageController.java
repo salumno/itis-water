@@ -5,6 +5,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import ru.kpfu.itis.water.services.AppointmentService;
 import ru.kpfu.itis.water.services.TicketService;
 
 /**
@@ -17,9 +18,11 @@ import ru.kpfu.itis.water.services.TicketService;
 public class AdminPageController {
 
     private TicketService ticketService;
+    private AppointmentService appointmentService;
 
-    public AdminPageController(TicketService ticketService) {
+    public AdminPageController(TicketService ticketService, AppointmentService appointmentService) {
         this.ticketService = ticketService;
+        this.appointmentService = appointmentService;
     }
 
     @RequestMapping(value = "/news", method = RequestMethod.GET)
@@ -32,5 +35,11 @@ public class AdminPageController {
         model.addAttribute("tickets", ticketService.getAllTickets());
         model.addAttribute("statuses", ticketService.getTicketStatuses());
         return "admin/ticket-page";
+    }
+
+    @RequestMapping(value = "/appointments", method = RequestMethod.GET)
+    public String getAppointmentsPage(@ModelAttribute("model")ModelMap model) {
+        model.addAttribute("appointments", appointmentService.getAllAppointments());
+        return "admin/appointment-page";
     }
 }
