@@ -12,6 +12,7 @@ import ru.kpfu.itis.water.util.AppointmentDocsGenerator;
 import ru.kpfu.itis.water.util.AuthenticationUtil;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * Created by Melnikov Semen
@@ -60,6 +61,11 @@ public class AppointmentServiceImpl implements AppointmentService {
         AppointmentDoc doc = generateDoc(appointment);
         appointment.setDoc(doc);
         appointmentRepository.save(appointment);
+    }
+
+    @Override
+    public List<Appointment> getAllAppointments() {
+        return appointmentRepository.findAll();
     }
 
     private String generateAppointmentCode(Department department, User user) {
