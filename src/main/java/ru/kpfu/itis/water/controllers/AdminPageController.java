@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import ru.kpfu.itis.water.services.AppointmentService;
+import ru.kpfu.itis.water.services.EmployeeService;
 import ru.kpfu.itis.water.services.TicketService;
 
 /**
@@ -19,10 +20,12 @@ public class AdminPageController {
 
     private TicketService ticketService;
     private AppointmentService appointmentService;
+    private EmployeeService employeeService;
 
-    public AdminPageController(TicketService ticketService, AppointmentService appointmentService) {
+    public AdminPageController(TicketService ticketService, AppointmentService appointmentService, EmployeeService employeeService) {
         this.ticketService = ticketService;
         this.appointmentService = appointmentService;
+        this.employeeService = employeeService;
     }
 
     @RequestMapping(value = "/news", method = RequestMethod.GET)
@@ -34,12 +37,18 @@ public class AdminPageController {
     public String getTicketPage(@ModelAttribute("model")ModelMap model) {
         model.addAttribute("tickets", ticketService.getAllTickets());
         model.addAttribute("statuses", ticketService.getTicketStatuses());
-        return "admin/ticket-page";
+        return "admin/tickets-page";
     }
 
     @RequestMapping(value = "/appointments", method = RequestMethod.GET)
     public String getAppointmentsPage(@ModelAttribute("model")ModelMap model) {
         model.addAttribute("appointments", appointmentService.getAllAppointments());
-        return "admin/appointment-page";
+        return "admin/appointments-page";
+    }
+
+    @RequestMapping(value = "/employees", method = RequestMethod.GET)
+    public String getEmployeesPage(@ModelAttribute("model")ModelMap model) {
+        model.addAttribute("employees", employeeService.getAllEmployees());
+        return "admin/employees-page";
     }
 }
