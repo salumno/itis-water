@@ -30,6 +30,7 @@ public class AdminPageController {
     @RequestMapping(value = "/tickets", method = RequestMethod.GET)
     public String getTicketPage(@ModelAttribute("model")ModelMap model) {
         model.addAttribute("tickets", ticketService.getAllTickets());
+        model.addAttribute("statuses", ticketService.getTicketStatuses());
         return "admin/ticket-page";
     }
 }
