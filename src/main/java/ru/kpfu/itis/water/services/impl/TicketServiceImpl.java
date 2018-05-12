@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import ru.kpfu.itis.water.dto.TicketMessageDto;
 import ru.kpfu.itis.water.form.TicketAddForm;
 import ru.kpfu.itis.water.form.TicketMessageAddForm;
+import ru.kpfu.itis.water.form.TicketStatusChangeForm;
 import ru.kpfu.itis.water.model.*;
 import ru.kpfu.itis.water.repositories.TicketMessageRepository;
 import ru.kpfu.itis.water.repositories.TicketRepository;
@@ -51,7 +52,7 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public Optional<Ticket> getTicketById(Long ticketId) {
-        return ticketRepository.findById(ticketId);
+        return ticketRepository.findOneById(ticketId);
     }
 
     @Override
@@ -62,7 +63,7 @@ public class TicketServiceImpl implements TicketService {
     @Override
     public void addTicketMessage(TicketMessageAddForm ticketMessageAddForm, Authentication authentication, Long ticketId) {
         User author = authenticationUtil.getUserDataByAuthentication(authentication).getUser();
-        Ticket ticket = ticketRepository.findById(ticketId).orElseThrow(() -> new IllegalArgumentException("Ticket with ID: " + ticketId + " not found."));
+        Ticket ticket = ticketRepository.findOneById(ticketId).orElseThrow(() -> new IllegalArgumentException("Ticket with ID: " + ticketId + " not found."));
         TicketMessage ticketMessage = TicketMessage.builder()
                 .ticket(ticket)
                 .author(author)
@@ -82,5 +83,20 @@ public class TicketServiceImpl implements TicketService {
         return getAllTicketMessage(ticketId).stream()
                 .map(TicketMessageDto::createOnTicketMessage)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public TicketStatus[] getTicketStatuses() {
+        return TicketStatus.values();
+    }
+
+    @Override
+    public void changeTicketStatus(TicketStatusChangeForm form) {
+        Ticket ticket = ticketRepository.findOneById(form.getTicketId()).orElseThrow(
+                () -> new IllegalArgumentException("Ticket with id: " + form.getTicketId() + " not found.")
+        );
+        TicketStatus newStatus = TicketStatus.valueOf(form.getStatus());
+        ticket.setStatus(newStatus);
+        ticketRepository.save(ticket);
     }
 }

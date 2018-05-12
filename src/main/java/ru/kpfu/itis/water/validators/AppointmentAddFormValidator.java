@@ -33,7 +33,7 @@ public class AppointmentAddFormValidator implements Validator {
     public void validate(Object o, Errors errors) {
         AppointmentAddForm form = (AppointmentAddForm) o;
 
-        Optional<Department> departmentOptional = departmentRepository.findById(form.getDepId());
+        Optional<Department> departmentOptional = departmentRepository.findOneById(form.getDepId());
         if (!departmentOptional.isPresent()) {
             errors.reject("bad.departmentId", "Department with id " + form.getDepId() + " does not exits");
         }

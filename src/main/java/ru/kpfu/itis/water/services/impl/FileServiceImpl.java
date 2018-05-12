@@ -33,7 +33,7 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public void writeAppointmentDocToResponse(Long appointmentId, HttpServletResponse response) {
-        Appointment appointment = appointmentRepository.findById(appointmentId).orElseThrow(
+        Appointment appointment = appointmentRepository.findOneById(appointmentId).orElseThrow(
                 () -> new IllegalArgumentException("Appointment document with id: " + appointmentId + " not found.")
         );
         writeFileToResponse(appointment.getDoc().getFileInfo(), response);
@@ -41,7 +41,7 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public void writeImageToResponse(Long imageId, HttpServletResponse response) {
-        Image image = imageRepository.findById(imageId).orElseThrow(
+        Image image = imageRepository.findOneById(imageId).orElseThrow(
                 () -> new IllegalArgumentException("Image with id: " + imageId + " not found.")
         );
         writeFileToResponse(image.getFileInfo(), response);

@@ -1,15 +1,15 @@
 <html>
 <head>
-    <link rel="stylesheet" type="text/css" href="/resources/bootstrap/bootstrap-3.3.2-dist/css/bootstrap.min.css"/>
-    <script src="/resources/js/jquery.js"></script>
-    <script src="/resources/bootstrap/bootstrap-3.3.2-dist/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/bootstrap/bootstrap-3.3.2-dist/css/bootstrap.min.css"/>
+    <script src="/js/jquery.js"></script>
+    <script src="/bootstrap/bootstrap-3.3.2-dist/js/bootstrap.min.js"></script>
 </head>
 <body class="container">
 
 <#if model.ticket??>
 
     <p>${model.ticket.text}</p>
-    <div id="ticket-messages">
+    <div id="ticket-messages" class="pre-scrollable">
         <#list model.ticket.messages as message>
             <div class="panel">
                 <#if message.author.role == 'ADMIN'>
@@ -37,14 +37,23 @@
             </div>
         </#list>
     </div>
-    <form id="ticket-message-form" method="post">
-        <div class="form-group">
-            <label for="ticket-message-text">Ваше сообщение:</label>
-            <textarea id="ticket-message-text" class="form-control" name="text" rows="10"></textarea>
-            <button type="button" class="btn btn-default form-control" onclick="sendTicketMessageToServer(${model.ticket.id})">Отправить сообщение</button>
+    <#if model.ticket.status == "SOLVED">
+        <div class="alert alert-success">
+            Ваша проблема успешно решена. Спасибо, что написали нам!
         </div>
-
-    </form>
+    <#elseif model.ticket.status == "CLOSED">
+        <div class="alert alert-danger">
+            Заявка закрыта. Спасибо, что написали нам!
+        </div>
+    <#else>
+        <form id="ticket-message-form" method="post">
+            <div class="form-group">
+                <label for="ticket-message-text">Ваше сообщение:</label>
+                <textarea id="ticket-message-text" class="form-control" name="text" rows="10"></textarea>
+                <button type="button" class="btn btn-default form-control" onclick="sendTicketMessageToServer(${model.ticket.id})">Отправить сообщение</button>
+            </div>
+        </form>
+    </#if>
 <#else>
 
     <h2>Данной заявки не существует</h2>

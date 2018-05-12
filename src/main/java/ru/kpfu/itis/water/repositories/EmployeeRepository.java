@@ -1,7 +1,7 @@
 package ru.kpfu.itis.water.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import ru.kpfu.itis.water.model.Ticket;
+import ru.kpfu.itis.water.model.Employee;
 
 import java.util.Optional;
 
@@ -9,6 +9,6 @@ import java.util.Optional;
  * Created by Melnikov Semen
  * 11-601 ITIS KPFU
  */
-public interface TicketRepository extends JpaRepository<Ticket, Long> {
-    Optional<Ticket> findOneById(Long id);
+public interface EmployeeRepository extends JpaRepository<Employee, Long> {
+    Optional<Employee> findOneById(Long id);
 }
