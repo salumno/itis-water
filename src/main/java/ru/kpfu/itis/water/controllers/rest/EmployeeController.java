@@ -4,6 +4,8 @@ import org.springframework.web.bind.annotation.*;
 import ru.kpfu.itis.water.dto.EmployeeDto;
 import ru.kpfu.itis.water.form.EmployeeAddForm;
 import ru.kpfu.itis.water.form.EmployeeUpdateForm;
+import ru.kpfu.itis.water.security.roles.UserRole;
+import ru.kpfu.itis.water.security.status.UserStatus;
 import ru.kpfu.itis.water.services.EmployeeService;
 
 import java.util.List;
@@ -33,9 +35,23 @@ public class EmployeeController {
         return employeeService.getAllDTOEmployees();
     }
 
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public EmployeeDto getEmployeeById(@PathVariable("id") Long employeeId) {
+        return employeeService.getEmployeeDTOById(employeeId);
+    }
+
     @RequestMapping(value = "/{id}/update", method = RequestMethod.POST)
-    public List<EmployeeDto> updateEmployee(@ModelAttribute EmployeeUpdateForm form, @PathVariable("id") Long employeeId) {
+    public void updateEmployee(@ModelAttribute EmployeeUpdateForm form, @PathVariable("id") Long employeeId) {
         employeeService.updateEmployee(employeeId, form);
-        return employeeService.getAllDTOEmployees();
+    }
+
+    @RequestMapping(value = "/statuses", method = RequestMethod.GET)
+    public UserStatus[] getStatuses() {
+        return employeeService.getEmployeeStatuses();
+    }
+
+    @RequestMapping(value = "/roles", method = RequestMethod.GET)
+    public UserRole[] getRoles() {
+        return employeeService.getEmployeeRoles();
     }
 }

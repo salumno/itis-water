@@ -45,7 +45,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee getEmployeeById(Long id) {
-        return employeeRepository.findById(id).orElseThrow(
+        return employeeRepository.findOneById(id).orElseThrow(
                 () -> new IllegalArgumentException("Employee with id: " + id + " not found.")
         );
     }
@@ -73,6 +73,21 @@ public class EmployeeServiceImpl implements EmployeeService {
         employeeRepository.save(employee);
     }
 
+    @Override
+    public UserStatus[] getEmployeeStatuses() {
+        return UserStatus.values();
+    }
+
+    @Override
+    public UserRole[] getEmployeeRoles() {
+        return UserRole.values();
+    }
+
+    @Override
+    public EmployeeDto getEmployeeDTOById(Long employeeId) {
+        return EmployeeDto.from(getEmployeeById(employeeId));
+    }
+
     private User createUserByEmployeeForm(EmployeeAddForm form) {
         UserRole userRole = UserRole.valueOf(form.getRole());
         return User.builder()
@@ -94,7 +109,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     private Employee createEmployee(EmployeeAddForm form, UserData userData) {
-        Department department = departmentRepository.findById(form.getDepartmentId()).orElseThrow(
+        Department department = departmentRepository.findOneById(form.getDepartmentId()).orElseThrow(
                 () -> new IllegalArgumentException("Department with id: " + form.getDepartmentId() + " not found.")
         );
         return Employee.builder()
@@ -126,7 +141,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     private void updateCurrentEmployee(Employee currentEmployee, EmployeeUpdateForm form) {
-        Department department = departmentRepository.findById(form.getDepartmentId()).orElseThrow(
+        Department department = departmentRepository.findOneById(form.getDepartmentId()).orElseThrow(
                 () -> new IllegalArgumentException("Department with id: " + form.getDepartmentId() + " not found.")
         );
         currentEmployee.setSurname(form.getSurname());
@@ -136,6 +151,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         currentEmployee.setInn(form.getInn());
         currentEmployee.setSalary(form.getSalary());
         currentEmployee.setDepartment(department);
+        currentEmployee.setComment(form.getComment());
     }
 
     private void updateCurrentEmployeeUserData(UserData currentEmployeeUserData, EmployeeUpdateForm form) {
