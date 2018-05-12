@@ -1,8 +1,8 @@
 <html>
 <head>
-    <link rel="stylesheet" type="text/css" href="/resources/bootstrap/bootstrap-3.3.2-dist/css/bootstrap.min.css"/>
-    <script src="/resources/js/jquery.js"></script>
-    <script src="/resources/bootstrap/bootstrap-3.3.2-dist/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/bootstrap/bootstrap-3.3.2-dist/css/bootstrap.min.css"/>
+    <script src="/js/jquery.js"></script>
+    <script src="/bootstrap/bootstrap-3.3.2-dist/js/bootstrap.min.js"></script>
 </head>
 <body>
 
@@ -81,7 +81,6 @@
         }
 
         function updateNewsList(data) {
-            console.log(data);
             var news = data;
             $("#news-list").html("");
             for (var i = 0; i < news.length; i++) {

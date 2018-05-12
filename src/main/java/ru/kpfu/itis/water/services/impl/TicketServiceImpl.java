@@ -52,7 +52,7 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public Optional<Ticket> getTicketById(Long ticketId) {
-        return ticketRepository.findById(ticketId);
+        return ticketRepository.findOneById(ticketId);
     }
 
     @Override
@@ -63,7 +63,7 @@ public class TicketServiceImpl implements TicketService {
     @Override
     public void addTicketMessage(TicketMessageAddForm ticketMessageAddForm, Authentication authentication, Long ticketId) {
         User author = authenticationUtil.getUserDataByAuthentication(authentication).getUser();
-        Ticket ticket = ticketRepository.findById(ticketId).orElseThrow(() -> new IllegalArgumentException("Ticket with ID: " + ticketId + " not found."));
+        Ticket ticket = ticketRepository.findOneById(ticketId).orElseThrow(() -> new IllegalArgumentException("Ticket with ID: " + ticketId + " not found."));
         TicketMessage ticketMessage = TicketMessage.builder()
                 .ticket(ticket)
                 .author(author)
@@ -92,7 +92,7 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public void changeTicketStatus(TicketStatusChangeForm form) {
-        Ticket ticket = ticketRepository.findById(form.getTicketId()).orElseThrow(
+        Ticket ticket = ticketRepository.findOneById(form.getTicketId()).orElseThrow(
                 () -> new IllegalArgumentException("Ticket with id: " + form.getTicketId() + " not found.")
         );
         TicketStatus newStatus = TicketStatus.valueOf(form.getStatus());

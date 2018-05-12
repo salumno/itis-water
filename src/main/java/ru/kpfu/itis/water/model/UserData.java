@@ -34,7 +34,7 @@ public class UserData {
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id")
     private User user;
 }
