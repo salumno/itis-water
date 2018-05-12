@@ -76,9 +76,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         jdbcTokenRepository.setDataSource(dataSource);
         return jdbcTokenRepository;
     }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
 }

@@ -39,7 +39,7 @@ public class AppointmentServiceImpl implements AppointmentService {
     @Override
     public Appointment registerUserToAppointment(AppointmentAddForm form, Authentication authentication) {
         User user = authenticationUtil.getUserDataByAuthentication(authentication).getUser();
-        Department department = departmentRepository.findById(form.getDepId()).orElseThrow(
+        Department department = departmentRepository.findOneById(form.getDepId()).orElseThrow(
                 () -> new IllegalArgumentException("Department with id " + form.getDepId() + " does not exist")
         );
         Appointment appointment = Appointment.builder()
@@ -55,7 +55,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     @Override
     public void generateDocForAppointment(Long appointmentId) {
-        Appointment appointment = appointmentRepository.findById(appointmentId).orElseThrow(
+        Appointment appointment = appointmentRepository.findOneById(appointmentId).orElseThrow(
                 () -> new IllegalArgumentException("Appointment with id: " + appointmentId + " not found.")
         );
         AppointmentDoc doc = generateDoc(appointment);

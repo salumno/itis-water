@@ -25,7 +25,7 @@ public class AuthenticationUtil {
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
         UserData userData = userDetails.getUserData();
         Long userId = userData.getId();
-        Optional<UserData> userDataOptional = userDataRepository.findById(userId);
+        Optional<UserData> userDataOptional = userDataRepository.findOneById(userId);
         if (userDataOptional.isPresent()) {
             return userDataOptional.get();
         } else {

@@ -62,7 +62,7 @@ public class NewsServiceImpl implements NewsService {
 
     @Override
     public void removeNewsById(Long newsId) {
-        newsRepository.deleteById(newsId);
+        newsRepository.delete(newsId);
     }
 
     private List<NewsImage> createNewsAttachments(MultipartFile[] files, News news) {

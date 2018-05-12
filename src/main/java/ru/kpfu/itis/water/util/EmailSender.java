@@ -19,7 +19,6 @@ public class EmailSender {
     private JavaMailSender javaMailSender;
     private ExecutorService executorService;
 
-    // TODO: 11.05.18
     public EmailSender(JavaMailSender javaMailSender) {
         this.javaMailSender = javaMailSender;
         executorService = Executors.newCachedThreadPool();

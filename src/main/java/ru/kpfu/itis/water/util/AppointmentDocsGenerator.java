@@ -31,7 +31,7 @@ public class AppointmentDocsGenerator {
     @SneakyThrows
     public AppointmentDocsGenerator() {
         this.dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
-        BaseFont bf = BaseFont.createFont("/home/salumno/IdeaProjects/itis-water/src/main/webapp/resources/fonts/FreeSans.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+        BaseFont bf = BaseFont.createFont("/home/salumno/IdeaProjects/itis-water/src/main/resources/static/fonts/FreeSans.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
         cyrillicFont = new Font(bf,18, Font.NORMAL);
     }
 
