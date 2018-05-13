@@ -31,6 +31,11 @@ public class AdminPageController {
         this.departmentService = departmentService;
     }
 
+    @RequestMapping(value = "", method = RequestMethod.GET)
+    public String getAdminPanelPage() {
+        return "admin/panel-page";
+    }
+
     @RequestMapping(value = "/news", method = RequestMethod.GET)
     public String getNewsPage() {
         return "admin/news-page";
