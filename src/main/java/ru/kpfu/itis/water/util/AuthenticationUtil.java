@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import ru.kpfu.itis.water.model.UserData;
 import ru.kpfu.itis.water.repositories.UserDataRepository;
 import ru.kpfu.itis.water.security.details.UserDetailsImpl;
+import ru.kpfu.itis.water.security.roles.UserRole;
 
 import java.util.Optional;
 
@@ -33,4 +34,12 @@ public class AuthenticationUtil {
         }
     }
 
+    public String defineDefaultURL(Authentication authentication) {
+        UserData userData = getUserDataByAuthentication(authentication);
+        if (userData.getUserRole().equals(UserRole.USER)) {
+            return "/user/profile";
+        } else {
+            return "/admin";
+        }
+    }
 }

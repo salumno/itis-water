@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import ru.kpfu.itis.water.util.AuthenticationUtil;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -17,12 +18,18 @@ import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class AuthController {
+    private AuthenticationUtil authenticationUtil;
+
+    public AuthController(AuthenticationUtil authenticationUtil) {
+        this.authenticationUtil = authenticationUtil;
+    }
+
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(@ModelAttribute("model")ModelMap model, Authentication authentication,
                         @RequestParam(name = "error", required = false) String error) {
 
         if (authentication != null) {
-            return "redirect:/user/profile";
+            return "redirect:/post-login";
         }
         model.addAttribute("error", error);
         return "login-page";
@@ -34,5 +41,10 @@ public class AuthController {
             request.getSession().invalidate();
         }
         return "redirect:/login";
+    }
+
+    @RequestMapping(value = "/post-login", method = RequestMethod.GET)
+    public String postLogin(Authentication authentication) {
+        return "redirect:" + authenticationUtil.defineDefaultURL(authentication);
     }
 }
