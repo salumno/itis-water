@@ -2,6 +2,7 @@ package ru.kpfu.itis.water.services.impl;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import ru.kpfu.itis.water.dto.TicketDto;
 import ru.kpfu.itis.water.dto.TicketMessageDto;
 import ru.kpfu.itis.water.form.TicketAddForm;
 import ru.kpfu.itis.water.form.TicketMessageAddForm;
@@ -98,5 +99,10 @@ public class TicketServiceImpl implements TicketService {
         TicketStatus newStatus = TicketStatus.valueOf(form.getStatus());
         ticket.setStatus(newStatus);
         ticketRepository.save(ticket);
+    }
+
+    @Override
+    public List<TicketDto> getAllTicketsDtoByStatus(String currentStatus) {
+        return null;
     }
 }

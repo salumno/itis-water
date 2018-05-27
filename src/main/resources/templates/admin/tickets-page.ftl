@@ -6,6 +6,16 @@
 </head>
 <body class="container">
 <h3>Присланные заявки:</h3>
+<select id="status-filter" onchange="statusFilterChanged()">
+     <#list model.statuses as status>
+         <#if status?index == 0>
+             <option value="${status}" selected>${status}</option>
+         <#else>
+             <option value="${status}">${status}</option>
+         </#if>
+     </#list>
+</select>
+<hr>
 <#list model.tickets as ticket>
 <div class="panel">
     <div class="panel-heading">
@@ -54,6 +64,10 @@
                 console.log('statusChanged method has produced this error.')
             }
         });
+    }
+
+    function statusFilterChanged() {
+
     }
 </script>
 </body>
