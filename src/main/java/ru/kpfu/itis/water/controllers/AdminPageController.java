@@ -61,4 +61,10 @@ public class AdminPageController {
         model.addAttribute("departments", departmentService.getAllDepartments());
         return "admin/employees-page";
     }
+
+    @RequestMapping(value = "/departments", method = RequestMethod.GET)
+    public String getDepartmentsPage(@ModelAttribute("model")ModelMap model) {
+        model.addAttribute("departments", departmentService.getAllDepartments());
+        return "admin/departments-page";
+    }
 }
