@@ -5,7 +5,6 @@
     <script src="/bootstrap/bootstrap-3.3.2-dist/js/bootstrap.min.js"></script>
 </head>
 <body>
-
     <div class="container">
         <div id="news-form-block">
             <form method="post" enctype="multipart/form-data" id="news-form">
@@ -18,7 +17,7 @@
                 <div class="form-group">
                     <input id="files" type="file" multiple="multiple" name="files" accept="image/*"/>
                 </div>
-                <button class="btn btn-default" type="button" onclick="uploadNewsOnServer()">оставить отзыв</button>
+                <button class="btn btn-default" type="button" onclick="uploadNewsOnServer()">опубликовать</button>
                 <div class="clearfix"></div>
             </form>
         </div>
@@ -96,6 +95,7 @@
                             '</div>' +
                             '<div class="col-md-2">' +
                                 '<span class="glyphicon glyphicon-remove" onclick="deleteNews(' + currentNews.id +')"></span>' +
+                                '<a href="/admin/news/' + currentNews.id + '"><span class="glyphicon glyphicon-edit"></span></a>' +
                             '</div>' +
                         '</div>' +
                         '<div class="row">' +
