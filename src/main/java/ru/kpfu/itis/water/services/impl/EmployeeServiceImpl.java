@@ -15,6 +15,7 @@ import ru.kpfu.itis.water.util.EmailSender;
 import ru.kpfu.itis.water.util.LoginPasswordGenerator;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by Melnikov Semen
@@ -23,6 +24,8 @@ import java.util.List;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
+
+    private final String FILTER_UNDEFINED_VALUE = "undefined";
 
     private EmployeeRepository employeeRepository;
     private EmailSender emailSender;
@@ -86,6 +89,21 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public EmployeeDto getEmployeeDTOById(Long employeeId) {
         return EmployeeDto.from(getEmployeeById(employeeId));
+    }
+
+    @Override
+    public List<EmployeeDto> getEmployeeDTOByNameFilterValue(String rawFilterValue) {
+        if (FILTER_UNDEFINED_VALUE.equals(rawFilterValue)) {
+            return getAllDTOEmployees();
+        }
+        String filterName = rawFilterValue.trim().toLowerCase();
+        return getAllDTOEmployees().stream()
+                .filter(e -> {
+                    String rawFullName = e.getSurname() + ' ' + e.getName() + ' ' + e.getPatro();
+                    String fullName = rawFullName.toLowerCase();
+                    return fullName.contains(filterName);
+                })
+                .collect(Collectors.toList());
     }
 
     private User createUserByEmployeeForm(EmployeeAddForm form) {
