@@ -2,6 +2,7 @@ package ru.kpfu.itis.water.services.impl;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+import ru.kpfu.itis.water.dto.TicketDto;
 import ru.kpfu.itis.water.dto.TicketMessageDto;
 import ru.kpfu.itis.water.form.TicketAddForm;
 import ru.kpfu.itis.water.form.TicketMessageAddForm;
@@ -26,6 +27,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class TicketServiceImpl implements TicketService {
+
+    private final String FILTER_UNDEFINED_VALUE = "undefined";
 
     private TicketRepository ticketRepository;
     private AuthenticationUtil authenticationUtil;
@@ -98,5 +101,14 @@ public class TicketServiceImpl implements TicketService {
         TicketStatus newStatus = TicketStatus.valueOf(form.getStatus());
         ticket.setStatus(newStatus);
         ticketRepository.save(ticket);
+    }
+
+    @Override
+    public List<TicketDto> getAllTicketsDtoByStatus(String currentStatus) {
+        if (FILTER_UNDEFINED_VALUE.equals(currentStatus)) {
+            return TicketDto.from(getAllTickets());
+        }
+        TicketStatus status = TicketStatus.valueOf(currentStatus);
+        return TicketDto.from(ticketRepository.findAllByStatus(status));
     }
 }

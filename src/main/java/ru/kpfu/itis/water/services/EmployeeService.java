@@ -29,4 +29,6 @@ public interface EmployeeService {
     UserRole[] getEmployeeRoles();
 
     EmployeeDto getEmployeeDTOById(Long employeeId);
+
+    List<EmployeeDto> getEmployeeDTOByNameFilterValue(String filterValue);
 }

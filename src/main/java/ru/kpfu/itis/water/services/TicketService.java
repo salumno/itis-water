@@ -1,6 +1,7 @@
 package ru.kpfu.itis.water.services;
 
 import org.springframework.security.core.Authentication;
+import ru.kpfu.itis.water.dto.TicketDto;
 import ru.kpfu.itis.water.dto.TicketMessageDto;
 import ru.kpfu.itis.water.form.TicketAddForm;
 import ru.kpfu.itis.water.form.TicketMessageAddForm;
@@ -33,4 +34,6 @@ public interface TicketService {
     TicketStatus[] getTicketStatuses();
 
     void changeTicketStatus(TicketStatusChangeForm form);
+
+    List<TicketDto> getAllTicketsDtoByStatus(String currentStatus);
 }

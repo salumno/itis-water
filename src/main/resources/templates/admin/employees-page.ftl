@@ -52,6 +52,8 @@
         </div>
     </form>
     <hr>
+    <input id="employee-name-filter" type="text" placeholder="Поиск по имени" onchange="employeeFilterChange()">
+    <hr>
     <div id="employee-list">
         <#list model.employees as employee>
             <form id="employee-form-${employee.id}">
@@ -143,6 +145,24 @@
             },
             error: function () {
                 console.log('loadDepartmentsFromServer function produced the error.');
+            }
+        });
+    }
+
+    function employeeFilterChange() {
+        var name = $('#employee-name-filter').val();
+        if (name.length === 0) {
+            name = "undefined";
+        }
+        $.ajax({
+            url: '/api/admin/employees/filter/' + name,
+            type: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                fillEmployeeList(data);
+            },
+            error: function () {
+                console.log('employeeFilterChange function produced the error.');
             }
         });
     }

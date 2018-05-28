@@ -1,11 +1,8 @@
 package ru.kpfu.itis.water.dto;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.*;
 import ru.kpfu.itis.water.model.News;
-import ru.kpfu.itis.water.model.NewsImage;
 
-import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;

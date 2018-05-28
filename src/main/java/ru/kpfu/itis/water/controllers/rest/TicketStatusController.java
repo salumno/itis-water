@@ -1,11 +1,12 @@
 package ru.kpfu.itis.water.controllers.rest;
 
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import ru.kpfu.itis.water.dto.TicketDto;
 import ru.kpfu.itis.water.form.TicketStatusChangeForm;
+import ru.kpfu.itis.water.model.TicketStatus;
 import ru.kpfu.itis.water.services.TicketService;
+
+import java.util.List;
 
 /**
  * Created by Melnikov Semen
@@ -22,8 +23,18 @@ public class TicketStatusController {
         this.ticketService = ticketService;
     }
 
-    @PostMapping("/status")
+    @GetMapping("/status")
+    public TicketStatus[] getTicketStatuses() {
+        return ticketService.getTicketStatuses();
+    }
+
+    @PostMapping("/status/update")
     public void changeTicketStatus(@ModelAttribute TicketStatusChangeForm form) {
         ticketService.changeTicketStatus(form);
+    }
+
+    @GetMapping("/status/{value}")
+    public List<TicketDto> getTicketsByFilter(@PathVariable("value") String currentStatus) {
+        return ticketService.getAllTicketsDtoByStatus(currentStatus);
     }
 }

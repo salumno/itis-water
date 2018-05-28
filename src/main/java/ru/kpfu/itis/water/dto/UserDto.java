@@ -30,7 +30,7 @@ public class UserDto {
         role = user.getRole().toString();
     }
 
-    public static UserDto createOnTicketMessage(User user) {
+    public static UserDto from(User user) {
         return new UserDto(user);
     }
 }

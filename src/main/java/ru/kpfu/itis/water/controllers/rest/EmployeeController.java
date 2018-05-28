@@ -45,6 +45,11 @@ public class EmployeeController {
         employeeService.updateEmployee(employeeId, form);
     }
 
+    @RequestMapping(value = "/filter/{value}", method = RequestMethod.GET)
+    public List<EmployeeDto> getEmployeeByFilterName(@PathVariable("value") String filterValue) {
+        return employeeService.getEmployeeDTOByNameFilterValue(filterValue);
+    }
+
     @RequestMapping(value = "/statuses", method = RequestMethod.GET)
     public UserStatus[] getStatuses() {
         return employeeService.getEmployeeStatuses();
