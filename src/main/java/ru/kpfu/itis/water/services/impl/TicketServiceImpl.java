@@ -28,6 +28,8 @@ import java.util.stream.Collectors;
 @Service
 public class TicketServiceImpl implements TicketService {
 
+    private final String filterUndefinedValue = "undefined";
+
     private TicketRepository ticketRepository;
     private AuthenticationUtil authenticationUtil;
     private TicketMessageRepository ticketMessageRepository;
@@ -103,6 +105,11 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public List<TicketDto> getAllTicketsDtoByStatus(String currentStatus) {
-        return null;
+        if (filterUndefinedValue.equals(currentStatus)) {
+            return TicketDto.from(getAllTickets());
+        } else {
+            TicketStatus status = TicketStatus.valueOf(currentStatus);
+            return TicketDto.from(ticketRepository.findAllByStatus(status));
+        }
     }
 }

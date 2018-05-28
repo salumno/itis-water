@@ -3,6 +3,7 @@ package ru.kpfu.itis.water.controllers.rest;
 import org.springframework.web.bind.annotation.*;
 import ru.kpfu.itis.water.dto.TicketDto;
 import ru.kpfu.itis.water.form.TicketStatusChangeForm;
+import ru.kpfu.itis.water.model.TicketStatus;
 import ru.kpfu.itis.water.services.TicketService;
 
 import java.util.List;
@@ -22,7 +23,12 @@ public class TicketStatusController {
         this.ticketService = ticketService;
     }
 
-    @PostMapping("/status")
+    @GetMapping("/status")
+    public TicketStatus[] getTicketStatuses() {
+        return ticketService.getTicketStatuses();
+    }
+
+    @PostMapping("/status/update")
     public void changeTicketStatus(@ModelAttribute TicketStatusChangeForm form) {
         ticketService.changeTicketStatus(form);
     }
