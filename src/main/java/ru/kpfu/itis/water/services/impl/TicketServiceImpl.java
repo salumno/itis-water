@@ -7,6 +7,7 @@ import ru.kpfu.itis.water.dto.TicketMessageDto;
 import ru.kpfu.itis.water.form.TicketAddForm;
 import ru.kpfu.itis.water.form.TicketMessageAddForm;
 import ru.kpfu.itis.water.form.TicketStatusChangeForm;
+import ru.kpfu.itis.water.form.TicketUpdateForm;
 import ru.kpfu.itis.water.model.*;
 import ru.kpfu.itis.water.repositories.TicketMessageRepository;
 import ru.kpfu.itis.water.repositories.TicketRepository;
@@ -110,5 +111,14 @@ public class TicketServiceImpl implements TicketService {
         }
         TicketStatus status = TicketStatus.valueOf(currentStatus);
         return TicketDto.from(ticketRepository.findAllByStatus(status));
+    }
+
+    @Override
+    public void updateTicket(Long ticketId, TicketUpdateForm form) {
+        Ticket ticket = ticketRepository.findOneById(ticketId).orElseThrow(
+                () -> new IllegalArgumentException("Ticket with id; " + ticketId + " does not exist.")
+        );
+        ticket.setText(form.getText());
+        ticketRepository.save(ticket);
     }
 }

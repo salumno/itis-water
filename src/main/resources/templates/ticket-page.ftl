@@ -8,7 +8,15 @@
 
 <#if model.ticket??>
 
-    <p>${model.ticket.text}</p>
+    <div id="ticket-text-wrap">
+
+        <div id="ticket-text-edit-button">
+            <button class="btn btn-warning" type="button" onclick="editTicketMessage(${model.ticket.id})">изменить</button>
+        </div>
+        <textarea id="ticket-text" disabled>${model.ticket.text}</textarea>
+        <div id="ticket-text-edit-button-group"></div>
+    </div>
+
     <div id="ticket-messages" class="pre-scrollable">
         <#list model.ticket.messages as message>
             <div class="panel">
@@ -61,6 +69,72 @@
 </#if>
 
 <script>
+    var oldTicketText;
+
+    function editTicketMessage(ticketId) {
+        oldTicketText = $('#ticket-text').val();
+        closeEditButton();
+        openEditButtonGroup(ticketId);
+        changeTicketTextDisabledProp(false);
+    }
+
+    function closeEditButton() {
+        $('#ticket-text-edit-button').html('');
+    }
+
+    function openEditButton(ticketId) {
+        var area = $('#ticket-text-edit-button');
+        area.html('');
+        area.append(
+            '<button class="btn btn-warning" type="button" onclick="editTicketMessage(' + ticketId + ')">изменить</button>'
+        );
+    }
+
+    function openEditButtonGroup(ticketId) {
+        var group = $('#ticket-text-edit-button-group');
+        group.html('');
+        group.append(
+            '<button class="btn btn-success" type="button" onclick="saveEditChanges(' + ticketId + ')">сохранить</button>' +
+            '<button class="btn btn-danger" type="button" onclick="cancelEditChanges(' + ticketId + ')">отмена</button>'
+        );
+    }
+
+    function closeEditButtonGroup() {
+        $('#ticket-text-edit-button-group').html('');
+    }
+
+    function saveEditChanges(ticketId) {
+        var data = new FormData();
+        data.append("text", $('#ticket-text').val());
+
+        $.ajax({
+            url: '/api/tickets/' + ticketId + '/update',
+            type: 'POST',
+            data: data,
+            contentType: false,
+            processData: false,
+            success: function () {
+                closeEditButtonGroup();
+                openEditButton(ticketId);
+                changeTicketTextDisabledProp(true);
+            },
+            error: function () {
+                console.log('ticket-page saveEditChanges method failed')
+            }
+        })
+    }
+
+    function cancelEditChanges(ticketId) {
+        closeEditButtonGroup();
+        openEditButton(ticketId);
+        changeTicketTextDisabledProp(true);
+        $('#ticket-text').val(oldTicketText);
+    }
+
+    function changeTicketTextDisabledProp(isDisabled) {
+        $('#ticket-text').prop("disabled", isDisabled);
+    }
+
     function sendTicketMessageToServer(ticketId) {
         var form = $("#ticket-message-form")[0];
         var data = new FormData(form);
