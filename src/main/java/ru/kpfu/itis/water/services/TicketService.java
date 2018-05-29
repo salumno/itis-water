@@ -6,6 +6,7 @@ import ru.kpfu.itis.water.dto.TicketMessageDto;
 import ru.kpfu.itis.water.form.TicketAddForm;
 import ru.kpfu.itis.water.form.TicketMessageAddForm;
 import ru.kpfu.itis.water.form.TicketStatusChangeForm;
+import ru.kpfu.itis.water.form.TicketUpdateForm;
 import ru.kpfu.itis.water.model.Ticket;
 import ru.kpfu.itis.water.model.TicketMessage;
 import ru.kpfu.itis.water.model.TicketStatus;
@@ -36,4 +37,6 @@ public interface TicketService {
     void changeTicketStatus(TicketStatusChangeForm form);
 
     List<TicketDto> getAllTicketsDtoByStatus(String currentStatus);
+
+    void updateTicket(Long ticketId, TicketUpdateForm form);
 }
