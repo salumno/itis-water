@@ -2,9 +2,8 @@ package ru.kpfu.itis.water.dto;
 
 import lombok.*;
 import ru.kpfu.itis.water.model.Ticket;
-import ru.kpfu.itis.water.model.TicketStatus;
 
-import java.util.Date;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,20 +23,21 @@ public class TicketDto {
 
     private String text;
 
-    private TicketStatus status;
+    private String status;
 
     private UserDto author;
 
-    private Date date;
+    private String date;
 
     private List<TicketMessageDto> messages;
 
     private TicketDto(Ticket ticket) {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
         id = ticket.getId();
         text = ticket.getText();
-        status = ticket.getStatus();
+        status = ticket.getStatus().toString();
         author = UserDto.from(ticket.getAuthor());
-        date = ticket.getDate();
+        date = formatter.format(ticket.getDate());
         messages = TicketMessageDto.createOnTicketMessages(ticket.getMessages());
     }
 
