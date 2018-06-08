@@ -14,4 +14,5 @@ import java.util.Optional;
 public interface TicketRepository extends JpaRepository<Ticket, Long> {
     Optional<Ticket> findOneById(Long id);
     List<Ticket> findAllByStatus(TicketStatus status);
+    List<Ticket> findAllByAuthorId(Long authorId);
 }

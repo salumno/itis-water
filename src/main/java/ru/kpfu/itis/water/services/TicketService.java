@@ -7,6 +7,7 @@ import ru.kpfu.itis.water.form.TicketAddForm;
 import ru.kpfu.itis.water.form.TicketMessageAddForm;
 import ru.kpfu.itis.water.form.TicketStatusChangeForm;
 import ru.kpfu.itis.water.form.TicketUpdateForm;
+import ru.kpfu.itis.water.form.client.ClientTicketMessageAddForm;
 import ru.kpfu.itis.water.model.Ticket;
 import ru.kpfu.itis.water.model.TicketMessage;
 import ru.kpfu.itis.water.model.TicketStatus;
@@ -20,23 +21,27 @@ import java.util.Optional;
  */
 
 public interface TicketService {
-    void addTicket(TicketAddForm ticketAddForm, Authentication authentication);
+    TicketStatus[] getTicketStatuses();
 
     Optional<Ticket> getTicketById(Long ticketId);
 
     List<Ticket> getAllTickets();
 
-    void addTicketMessage(TicketMessageAddForm ticketMessageAddForm, Authentication authentication, Long ticketId);
+    List<TicketDto> getAllTicketsDtoByStatus(String currentStatus);
+
+    List<TicketDto> getAllTicketsDtoByAuthorId(Long userId);
 
     List<TicketMessage> getAllTicketMessage(Long ticketId);
 
     List<TicketMessageDto> getAllTicketMessageDto(Long ticketId);
 
-    TicketStatus[] getTicketStatuses();
+    void addTicket(TicketAddForm ticketAddForm, Authentication authentication);
+
+    void updateTicket(Long ticketId, TicketUpdateForm form);
 
     void changeTicketStatus(TicketStatusChangeForm form);
 
-    List<TicketDto> getAllTicketsDtoByStatus(String currentStatus);
+    void addTicketMessage(TicketMessageAddForm ticketMessageAddForm, Authentication authentication, Long ticketId);
 
-    void updateTicket(Long ticketId, TicketUpdateForm form);
+    void addTicketMessage(ClientTicketMessageAddForm form);
 }

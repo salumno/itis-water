@@ -8,9 +8,11 @@ import ru.kpfu.itis.water.form.TicketAddForm;
 import ru.kpfu.itis.water.form.TicketMessageAddForm;
 import ru.kpfu.itis.water.form.TicketStatusChangeForm;
 import ru.kpfu.itis.water.form.TicketUpdateForm;
+import ru.kpfu.itis.water.form.client.ClientTicketMessageAddForm;
 import ru.kpfu.itis.water.model.*;
 import ru.kpfu.itis.water.repositories.TicketMessageRepository;
 import ru.kpfu.itis.water.repositories.TicketRepository;
+import ru.kpfu.itis.water.repositories.UserRepository;
 import ru.kpfu.itis.water.services.TicketService;
 import ru.kpfu.itis.water.util.AuthenticationUtil;
 
@@ -34,11 +36,56 @@ public class TicketServiceImpl implements TicketService {
     private TicketRepository ticketRepository;
     private AuthenticationUtil authenticationUtil;
     private TicketMessageRepository ticketMessageRepository;
+    private UserRepository userRepository;
 
-    public TicketServiceImpl(TicketRepository ticketRepository, AuthenticationUtil authenticationUtil, TicketMessageRepository ticketMessageRepository) {
+    public TicketServiceImpl(TicketRepository ticketRepository, AuthenticationUtil authenticationUtil, TicketMessageRepository ticketMessageRepository, UserRepository userRepository) {
         this.ticketRepository = ticketRepository;
         this.authenticationUtil = authenticationUtil;
         this.ticketMessageRepository = ticketMessageRepository;
+        this.userRepository = userRepository;
+    }
+
+    @Override
+    public TicketStatus[] getTicketStatuses() {
+        return TicketStatus.values();
+    }
+
+    @Override
+    public Optional<Ticket> getTicketById(Long ticketId) {
+        return ticketRepository.findOneById(ticketId);
+    }
+
+    @Override
+    public List<Ticket> getAllTickets() {
+        return ticketRepository.findAll();
+    }
+
+    @Override
+    public List<TicketDto> getAllTicketsDtoByStatus(String currentStatus) {
+        if (FILTER_UNDEFINED_VALUE.equals(currentStatus)) {
+            return TicketDto.from(getAllTickets());
+        }
+        TicketStatus status = TicketStatus.valueOf(currentStatus);
+        return TicketDto.from(ticketRepository.findAllByStatus(status));
+    }
+
+    @Override
+    public List<TicketDto> getAllTicketsDtoByAuthorId(Long userId) {
+        return ticketRepository.findAllByAuthorId(userId).stream()
+                .map(TicketDto::from)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<TicketMessage> getAllTicketMessage(Long ticketId) {
+        return ticketMessageRepository.findAllByTicketId(ticketId);
+    }
+
+    @Override
+    public List<TicketMessageDto> getAllTicketMessageDto(Long ticketId) {
+        return getAllTicketMessage(ticketId).stream()
+                .map(TicketMessageDto::createOnTicketMessage)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -55,13 +102,22 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
-    public Optional<Ticket> getTicketById(Long ticketId) {
-        return ticketRepository.findOneById(ticketId);
+    public void updateTicket(Long ticketId, TicketUpdateForm form) {
+        Ticket ticket = ticketRepository.findOneById(ticketId).orElseThrow(
+                () -> new IllegalArgumentException("Ticket with id; " + ticketId + " does not exist.")
+        );
+        ticket.setText(form.getText());
+        ticketRepository.save(ticket);
     }
 
     @Override
-    public List<Ticket> getAllTickets() {
-        return ticketRepository.findAll();
+    public void changeTicketStatus(TicketStatusChangeForm form) {
+        Ticket ticket = ticketRepository.findOneById(form.getTicketId()).orElseThrow(
+                () -> new IllegalArgumentException("Ticket with id: " + form.getTicketId() + " not found.")
+        );
+        TicketStatus newStatus = TicketStatus.valueOf(form.getStatus());
+        ticket.setStatus(newStatus);
+        ticketRepository.save(ticket);
     }
 
     @Override
@@ -78,47 +134,17 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
-    public List<TicketMessage> getAllTicketMessage(Long ticketId) {
-        return ticketMessageRepository.findAllByTicketId(ticketId);
-    }
-
-    @Override
-    public List<TicketMessageDto> getAllTicketMessageDto(Long ticketId) {
-        return getAllTicketMessage(ticketId).stream()
-                .map(TicketMessageDto::createOnTicketMessage)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public TicketStatus[] getTicketStatuses() {
-        return TicketStatus.values();
-    }
-
-    @Override
-    public void changeTicketStatus(TicketStatusChangeForm form) {
+    public void addTicketMessage(ClientTicketMessageAddForm form) {
+        User author = userRepository.findOne(form.getUserId());
         Ticket ticket = ticketRepository.findOneById(form.getTicketId()).orElseThrow(
-                () -> new IllegalArgumentException("Ticket with id: " + form.getTicketId() + " not found.")
+                () -> new IllegalArgumentException("Ticket with ID: " + form.getTicketId() + " not found.")
         );
-        TicketStatus newStatus = TicketStatus.valueOf(form.getStatus());
-        ticket.setStatus(newStatus);
-        ticketRepository.save(ticket);
-    }
-
-    @Override
-    public List<TicketDto> getAllTicketsDtoByStatus(String currentStatus) {
-        if (FILTER_UNDEFINED_VALUE.equals(currentStatus)) {
-            return TicketDto.from(getAllTickets());
-        }
-        TicketStatus status = TicketStatus.valueOf(currentStatus);
-        return TicketDto.from(ticketRepository.findAllByStatus(status));
-    }
-
-    @Override
-    public void updateTicket(Long ticketId, TicketUpdateForm form) {
-        Ticket ticket = ticketRepository.findOneById(ticketId).orElseThrow(
-                () -> new IllegalArgumentException("Ticket with id; " + ticketId + " does not exist.")
-        );
-        ticket.setText(form.getText());
-        ticketRepository.save(ticket);
+        TicketMessage ticketMessage = TicketMessage.builder()
+                .ticket(ticket)
+                .author(author)
+                .date(Date.valueOf(LocalDate.now()))
+                .text(form.getMessage())
+                .build();
+        ticketMessageRepository.save(ticketMessage);
     }
 }
