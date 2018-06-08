@@ -47,6 +47,11 @@ public class FileServiceImpl implements FileService {
         writeFileToResponse(image.getFileInfo(), response);
     }
 
+    @Override
+    public void writeEmployeesToResponse(FileInfo employeeDocumentInfo, HttpServletResponse response) {
+        writeFileToResponse(employeeDocumentInfo, response);
+    }
+
     @SneakyThrows
     private void writeFileToResponse(FileInfo fileInfo, HttpServletResponse response) {
         response.setContentType(fileInfo.getType());
