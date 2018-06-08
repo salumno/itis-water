@@ -54,6 +54,9 @@
     <hr>
     <input id="employee-name-filter" type="text" placeholder="Поиск по имени" onchange="employeeFilterChange()">
     <hr>
+    <div>
+        <a href="/file/employees" class="btn btn-default" role="button" download><span class="glyphicon glyphicon-download">Список Сотрудников</span></a>
+    </div>
     <div id="employee-list">
         <#list model.employees as employee>
             <form id="employee-form-${employee.id}">

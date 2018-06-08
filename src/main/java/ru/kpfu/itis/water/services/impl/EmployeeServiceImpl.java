@@ -12,6 +12,7 @@ import ru.kpfu.itis.water.security.roles.UserRole;
 import ru.kpfu.itis.water.security.status.UserStatus;
 import ru.kpfu.itis.water.services.EmployeeService;
 import ru.kpfu.itis.water.util.EmailSender;
+import ru.kpfu.itis.water.util.EmployeeDocsGenerator;
 import ru.kpfu.itis.water.util.LoginPasswordGenerator;
 
 import java.util.List;
@@ -32,13 +33,15 @@ public class EmployeeServiceImpl implements EmployeeService {
     private PasswordEncoder passwordEncoder;
     private DepartmentRepository departmentRepository;
     private LoginPasswordGenerator loginPasswordGenerator;
+    private EmployeeDocsGenerator employeeDocsGenerator;
 
-    public EmployeeServiceImpl(EmployeeRepository employeeRepository, EmailSender emailSender, PasswordEncoder passwordEncoder, DepartmentRepository departmentRepository, LoginPasswordGenerator loginPasswordGenerator) {
+    public EmployeeServiceImpl(EmployeeRepository employeeRepository, EmailSender emailSender, PasswordEncoder passwordEncoder, DepartmentRepository departmentRepository, LoginPasswordGenerator loginPasswordGenerator, EmployeeDocsGenerator employeeDocsGenerator) {
         this.employeeRepository = employeeRepository;
         this.emailSender = emailSender;
         this.passwordEncoder = passwordEncoder;
         this.departmentRepository = departmentRepository;
         this.loginPasswordGenerator = loginPasswordGenerator;
+        this.employeeDocsGenerator = employeeDocsGenerator;
     }
 
     @Override
@@ -104,6 +107,11 @@ public class EmployeeServiceImpl implements EmployeeService {
                     return fullName.contains(filterName);
                 })
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public FileInfo generateEmployeesDoc() {
+        return employeeDocsGenerator.generateDoc(getAllDTOEmployees());
     }
 
     private User createUserByEmployeeForm(EmployeeAddForm form) {
