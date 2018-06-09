@@ -1,0 +1,14 @@
+.title-center {
+    text-align: center;
+}
+
+body {
+    background-color: #dcf7ff;
+    font-family: "Fira Code", serif;
+}
+
+hr {
+    display: block;
+    margin: 0.5em auto;
+    border: 1px inset;
+}
