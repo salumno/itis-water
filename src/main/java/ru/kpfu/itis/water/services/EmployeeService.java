@@ -19,11 +19,11 @@ public interface EmployeeService {
 
     Employee getEmployeeById(Long id);
 
-    void addNewEmployee(EmployeeAddForm form);
+    Employee addNewEmployee(EmployeeAddForm form);
 
     List<EmployeeDto> getAllDTOEmployees();
 
-    void updateEmployee(Long employeeId, EmployeeUpdateForm form);
+    Employee updateEmployee(Long employeeId, EmployeeUpdateForm form);
 
     UserStatus[] getEmployeeStatuses();
 

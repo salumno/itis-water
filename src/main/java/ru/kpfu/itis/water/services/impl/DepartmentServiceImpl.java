@@ -29,12 +29,13 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public void addDepartment(DepartmentAddForm form) {
+    public Department addDepartment(DepartmentAddForm form) {
         Department department = Department.builder()
                 .name(form.getName())
                 .address(form.getAddress())
                 .build();
         departmentRepository.save(department);
+        return department;
     }
 
     @Override
@@ -43,11 +44,12 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public void updateDepartment(Long departmentId, DepartmentUpdateForm form) {
+    public Department updateDepartment(Long departmentId, DepartmentUpdateForm form) {
         Department department = getDepartmentById(departmentId);
         department.setAddress(form.getUpdatedAddress());
         department.setName(form.getUpdatedName());
         departmentRepository.save(department);
+        return department;
     }
 
     @Override
