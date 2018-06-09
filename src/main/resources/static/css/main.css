@@ -76,6 +76,21 @@ hr {
         margin: 0 auto;
         max-width: 1000px;
     }
+
+    /*Form for appointments adding*/
+    .appointment-form {
+        padding: 10px 0;
+    }
+
+    .appointment-form .alert {
+        margin: 0 auto;
+        max-width: 600px;
+    }
+
+    .appointment-form form {
+        margin: 0 auto;
+        max-width: 600px;
+    }
 }
 
 .panel-success {
