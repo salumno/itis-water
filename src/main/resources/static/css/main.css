@@ -1,7 +1,3 @@
-.title-center {
-    text-align: center;
-}
-
 body {
     background-color: #dcf7ff;
     font-family: "Fira Code", serif;
@@ -11,4 +7,30 @@ hr {
     display: block;
     margin: 0.5em auto;
     border: 1px inset;
+}
+
+.title-center {
+    text-align: center;
+}
+
+@media all and (min-width: 400px) {
+    .login-form {
+        padding: 10px 0;
+    }
+
+    .login-form .alert {
+        margin: 0 auto;
+        max-width: 500px;
+    }
+
+    .login-form form {
+        margin: 0 auto;
+        max-width: 400px;
+    }
+}
+
+.btn {
+    color: black;
+    width: 100%;
+    text-transform: uppercase;
 }
