@@ -44,6 +44,17 @@ hr {
         margin: 0 auto;
         max-width: 400px;
     }
+
+    /*Form on ticket page*/
+    .ticket-form {
+        padding: 10px 0;
+    }
+
+    .ticket-form form {
+        margin: 0 auto;
+        max-width: 600px;
+    }
+
 }
 
 .link {
