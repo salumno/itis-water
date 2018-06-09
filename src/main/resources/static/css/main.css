@@ -55,6 +55,35 @@ hr {
         max-width: 600px;
     }
 
+    /*Ticket form on specific ticket page*/
+    .ticket-edit-form {
+        padding: 10px 0;
+        margin: 0 auto;
+        max-width: 1000px;
+    }
+
+    /*Ticket message form*/
+    .ticket-message-form {
+        padding: 10px 0;
+    }
+
+    .ticket-message-form .alert {
+        margin: 0 auto;
+        max-width: 1000px;
+    }
+
+    .ticket-message-form form {
+        margin: 0 auto;
+        max-width: 1000px;
+    }
+}
+
+.panel-success {
+    background-color: #d2ff37;
+}
+
+.panel-warning {
+    background-color: #ffab00;
 }
 
 .link {
