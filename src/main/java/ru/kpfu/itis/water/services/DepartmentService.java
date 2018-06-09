@@ -13,11 +13,11 @@ import java.util.List;
 public interface DepartmentService {
     List<Department> getAllDepartments();
 
-    void addDepartment(DepartmentAddForm form);
+    Department addDepartment(DepartmentAddForm form);
 
     void deleteDepartmentById(Long departmentId);
 
-    void updateDepartment(Long departmentId, DepartmentUpdateForm form);
+    Department updateDepartment(Long departmentId, DepartmentUpdateForm form);
 
     Department getDepartmentById(Long departmentId);
 }
