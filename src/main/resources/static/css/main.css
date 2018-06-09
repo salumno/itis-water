@@ -9,11 +9,19 @@ hr {
     border: 1px inset;
 }
 
+a {
+    font-weight: normal;
+    text-transform: uppercase;
+    color: #0f0f0f;
+}
+
 .title-center {
     text-align: center;
 }
 
 @media all and (min-width: 400px) {
+
+    /*Form on login page*/
     .login-form {
         padding: 10px 0;
     }
@@ -24,6 +32,21 @@ hr {
     }
 
     .login-form form {
+        margin: 0 auto;
+        max-width: 400px;
+    }
+
+    /*Form on registration page*/
+    .registration-form {
+        padding: 10px 0;
+    }
+
+    .registration-form .alert {
+        margin: 0 auto;
+        max-width: 500px;
+    }
+
+    .registration-form form {
         margin: 0 auto;
         max-width: 400px;
     }

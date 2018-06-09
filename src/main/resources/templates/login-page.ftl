@@ -34,10 +34,10 @@
         <h2 class="title-center">Вход на портал</h2>
         <form  action="/login" method="post">
             <div class="form-group">
-                <input class="form-control" name="login" placeholder="логин" type="text">
+                <input class="form-control" name="login" placeholder="Логин" type="text" required>
             </div>
             <div class="form-group">
-                <input class="form-control" name="password" placeholder="пароль" type="password">
+                <input class="form-control" name="password" placeholder="Пароль" type="password" required>
             </div>
             <button class="btn btn-default" type="submit">Вход</button>
         </form>
