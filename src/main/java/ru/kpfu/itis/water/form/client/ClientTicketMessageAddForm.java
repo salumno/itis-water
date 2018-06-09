@@ -1,4 +1,4 @@
-package ru.kpfu.itis.water.form;
+package ru.kpfu.itis.water.form.client;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,12 +10,12 @@ import lombok.Setter;
  * 11-601 ITIS KPFU
  */
 
-
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class NewsEditForm {
-    private String title;
-    private String text;
+public class ClientTicketMessageAddForm {
+    private String message;
+    private Long userId;
+    private Long ticketId;
 }

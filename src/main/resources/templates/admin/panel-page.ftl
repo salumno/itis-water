@@ -21,5 +21,10 @@
             <a href="/admin/tickets" class="btn btn-default" role="button">Отзывы граждан</a>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-6">
+            <a href="/admin/departments" class="btn btn-default" role="button">Отделы</a>
+        </div>
+    </div>
 </body>
 </html>

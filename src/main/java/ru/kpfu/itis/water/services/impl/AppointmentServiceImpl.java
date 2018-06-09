@@ -76,7 +76,7 @@ public class AppointmentServiceImpl implements AppointmentService {
 
     private LocalDateTime calculateAppointmentTime() {
         // TODO: 22.04.18
-        return LocalDateTime.now();
+        return LocalDateTime.now().plusDays(1);
     }
 
     private AppointmentDoc generateDoc(Appointment appointment) {

@@ -10,12 +10,14 @@ import lombok.Setter;
  * 11-601 ITIS KPFU
  */
 
-
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class NewsEditForm {
-    private String title;
-    private String text;
+public class RegistrationForm {
+    private String name;
+    private String surname;
+    private String password;
+    private String passwordCheck;
+    private String login;
 }

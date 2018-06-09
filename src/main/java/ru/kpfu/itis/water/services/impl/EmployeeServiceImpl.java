@@ -12,9 +12,11 @@ import ru.kpfu.itis.water.security.roles.UserRole;
 import ru.kpfu.itis.water.security.status.UserStatus;
 import ru.kpfu.itis.water.services.EmployeeService;
 import ru.kpfu.itis.water.util.EmailSender;
+import ru.kpfu.itis.water.util.EmployeeDocsGenerator;
 import ru.kpfu.itis.water.util.LoginPasswordGenerator;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by Melnikov Semen
@@ -24,18 +26,22 @@ import java.util.List;
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
+    private final String FILTER_UNDEFINED_VALUE = "undefined";
+
     private EmployeeRepository employeeRepository;
     private EmailSender emailSender;
     private PasswordEncoder passwordEncoder;
     private DepartmentRepository departmentRepository;
     private LoginPasswordGenerator loginPasswordGenerator;
+    private EmployeeDocsGenerator employeeDocsGenerator;
 
-    public EmployeeServiceImpl(EmployeeRepository employeeRepository, EmailSender emailSender, PasswordEncoder passwordEncoder, DepartmentRepository departmentRepository, LoginPasswordGenerator loginPasswordGenerator) {
+    public EmployeeServiceImpl(EmployeeRepository employeeRepository, EmailSender emailSender, PasswordEncoder passwordEncoder, DepartmentRepository departmentRepository, LoginPasswordGenerator loginPasswordGenerator, EmployeeDocsGenerator employeeDocsGenerator) {
         this.employeeRepository = employeeRepository;
         this.emailSender = emailSender;
         this.passwordEncoder = passwordEncoder;
         this.departmentRepository = departmentRepository;
         this.loginPasswordGenerator = loginPasswordGenerator;
+        this.employeeDocsGenerator = employeeDocsGenerator;
     }
 
     @Override
@@ -86,6 +92,26 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public EmployeeDto getEmployeeDTOById(Long employeeId) {
         return EmployeeDto.from(getEmployeeById(employeeId));
+    }
+
+    @Override
+    public List<EmployeeDto> getEmployeeDTOByNameFilterValue(String rawFilterValue) {
+        if (FILTER_UNDEFINED_VALUE.equals(rawFilterValue)) {
+            return getAllDTOEmployees();
+        }
+        String filterName = rawFilterValue.trim().toLowerCase();
+        return getAllDTOEmployees().stream()
+                .filter(e -> {
+                    String rawFullName = e.getSurname() + ' ' + e.getName() + ' ' + e.getPatro();
+                    String fullName = rawFullName.toLowerCase();
+                    return fullName.contains(filterName);
+                })
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public FileInfo generateEmployeesDoc() {
+        return employeeDocsGenerator.generateDoc(getAllDTOEmployees());
     }
 
     private User createUserByEmployeeForm(EmployeeAddForm form) {
