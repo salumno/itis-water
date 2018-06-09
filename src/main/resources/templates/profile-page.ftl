@@ -23,6 +23,9 @@
                 <li><a href="/user/appointment-form">Запись на прием</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
+                <#if model.isNotUser>
+                    <li><a href="/admin/"><span class="glyphicon glyphicon-alert"></span> Админ-панель</a></li>
+                </#if>
                 <li class="active"><a href="/user/profile"><span class="glyphicon glyphicon-home"></span> Личный кабинет</a></li>
                 <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Выйти</a></li>
             </ul>

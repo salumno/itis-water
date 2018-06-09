@@ -6,6 +6,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import ru.kpfu.itis.water.model.UserData;
+import ru.kpfu.itis.water.security.roles.UserRole;
 import ru.kpfu.itis.water.util.AuthenticationUtil;
 
 /**
@@ -25,7 +27,9 @@ public class ProfileController {
 
     @RequestMapping(value = "/profile", method = RequestMethod.GET)
     public String getProfilePage(@ModelAttribute("model")ModelMap model, Authentication authentication) {
-        model.addAttribute("user", authenticationUtil.getUserDataByAuthentication(authentication).getUser());
+        UserData userData = authenticationUtil.getUserDataByAuthentication(authentication);
+        model.addAttribute("user", userData.getUser());
+        model.addAttribute("isNotUser", !userData.getUserRole().equals(UserRole.USER));
         return "profile-page";
     }
 }
