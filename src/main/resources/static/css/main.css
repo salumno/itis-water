@@ -91,6 +91,16 @@ hr {
         margin: 0 auto;
         max-width: 600px;
     }
+
+    /*For appointment result table*/
+    .appointment-table {
+        padding: 10px 0;
+    }
+
+    .appointment-form .table {
+        margin: 0 auto;
+        max-width: 600px;
+    }
 }
 
 .panel-success {
