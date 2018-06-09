@@ -57,13 +57,14 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public void addNewEmployee(EmployeeAddForm form) {
+    public Employee addNewEmployee(EmployeeAddForm form) {
         LoginPassword loginPassword = loginPasswordGenerator.generate();
         User user = createUserByEmployeeForm(form);
         UserData userData = createUserDataByEmployeeForm(form, user, loginPassword);
         Employee employee = createEmployee(form, userData);
         employeeRepository.save(employee);
         sendCredentialsToEmployee(loginPassword, employee);
+        return employee;
     }
 
     @Override
@@ -72,11 +73,12 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public void updateEmployee(Long employeeId, EmployeeUpdateForm form) {
+    public Employee updateEmployee(Long employeeId, EmployeeUpdateForm form) {
         Employee employee = getEmployeeById(employeeId);
         updateCurrentEmployee(employee, form);
         updateCurrentEmployeeUserData(employee.getUserData(), form);
         employeeRepository.save(employee);
+        return employee;
     }
 
     @Override
@@ -102,7 +104,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         String filterName = rawFilterValue.trim().toLowerCase();
         return getAllDTOEmployees().stream()
                 .filter(e -> {
-                    String rawFullName = e.getSurname() + ' ' + e.getName() + ' ' + e.getPatro();
+                    String rawFullName = e.getSurname() + e.getName() + e.getPatro();
                     String fullName = rawFullName.toLowerCase();
                     return fullName.contains(filterName);
                 })
