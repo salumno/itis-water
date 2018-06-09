@@ -23,8 +23,13 @@
             <ul class="nav navbar-nav">
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="/registration/"><span class="glyphicon glyphicon-user"></span> Регистрация</a></li>
-                <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Вход</a></li>
+                <#if model.isLoggedIn>
+                    <li><a href="/user/profile"><span class="glyphicon glyphicon-home"></span> Личный кабинет</a></li>
+                    <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Выйти</a></li>
+                <#else>
+                    <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Вход</a></li>
+                    <li><a href="/registration/"><span class="glyphicon glyphicon-user"></span> Регистрация</a></li>
+                </#if>
             </ul>
         </div>
     </div>

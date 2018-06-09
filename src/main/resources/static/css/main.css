@@ -9,12 +9,6 @@ hr {
     border: 1px inset;
 }
 
-a {
-    font-weight: normal;
-    text-transform: uppercase;
-    color: #0f0f0f;
-}
-
 .title-center {
     text-align: center;
 }
@@ -50,6 +44,12 @@ a {
         margin: 0 auto;
         max-width: 400px;
     }
+}
+
+.link {
+    font-weight: normal;
+    text-transform: uppercase;
+    color: #0f0f0f;
 }
 
 .btn {
