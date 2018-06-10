@@ -101,6 +101,12 @@ hr {
         margin: 0 auto;
         max-width: 600px;
     }
+
+    .employee-add-form form {
+        padding: 10px 0;
+        margin: 0 auto;
+        max-width: 600px;
+    }
 }
 
 .panel-success {
@@ -121,4 +127,5 @@ hr {
     color: black;
     width: 100%;
     text-transform: uppercase;
+    margin: 5px;
 }
