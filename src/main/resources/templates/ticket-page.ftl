@@ -7,6 +7,7 @@
     <link rel="stylesheet" type="text/css" href="/css/main.css"/>
 </head>
 <body>
+<#if model.isNotUser>
 <nav class="navbar navbar-inverse">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -15,20 +16,50 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">Водоканал господина Ланштейна</a>
+            <a class="navbar-brand" href="/admin/">Админ-панель господина Ланштейна</a>
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav">
-                <li><a href="/user/tickets">Заявки</a></li>
-                <li><a href="/user/appointment-form">Запись на прием</a></li>
+                <li><a href="/">На главную</a></li>
+                <li><a href="/admin/appointments">Записи на прием</a></li>
+                <li><a href="/admin/employees">Сотрудники</a></li>
+                <li><a href="/admin/news">Новости</a></li>
+                <li class="active"><a href="/admin/tickets">Заявки граждан</a></li>
+                <li><a href="/admin/departments">Отделы</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="/user/profile"><span class="glyphicon glyphicon-home"></span> Личный кабинет</a></li>
                 <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Выйти</a></li>
             </ul>
         </div>
     </div>
 </nav>
+<#else>
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/admin/">Админ-панель господина Ланштейна</a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+                <li><a href="/">На главную</a></li>
+                <li><a href="/admin/appointments">Записи на прием</a></li>
+                <li><a href="/admin/employees">Сотрудники</a></li>
+                <li><a href="/admin/news">Новости</a></li>
+                <li class="active"><a href="/admin/tickets">Заявки граждан</a></li>
+                <li><a href="/admin/departments">Отделы</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Выйти</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+</#if>
 <div class="container">
     <h3 class="title-center">Заявка от ${model.ticket.date}</h3>
     <#if model.ticket.status == 'NOT_VIEWED'>
