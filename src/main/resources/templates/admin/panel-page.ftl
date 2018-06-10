@@ -3,28 +3,37 @@
     <link rel="stylesheet" type="text/css" href="/bootstrap/bootstrap-3.3.2-dist/css/bootstrap.min.css"/>
     <script src="/js/jquery.js"></script>
     <script src="/bootstrap/bootstrap-3.3.2-dist/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="/css/main.css"/>
 </head>
-<body class="container">
-    <div class="row">
-        <div class="col-md-6">
-            <a href="/admin/appointments" class="btn btn-default" role="button">Записи на прием</a>
+<body>
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/admin/">Админ-панель господина Ланштейна</a>
         </div>
-        <div class="col-md-6">
-            <a href="/admin/employees" class="btn btn-default" role="button">Сотрудники</a>
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav">
+                <li><a href="/">На главную</a></li>
+                <li><a href="/admin/appointments">Записи на прием</a></li>
+                <li><a href="/admin/employees">Сотрудники</a></li>
+                <li><a href="/admin/news">Новости</a></li>
+                <li><a href="/admin/tickets">Заявки граждан</a></li>
+                <li><a href="/admin/departments">Отделы</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Выйти</a></li>
+            </ul>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-6">
-            <a href="/admin/news" class="btn btn-default" role="button">Новости</a>
-        </div>
-        <div class="col-md-6">
-            <a href="/admin/tickets" class="btn btn-default" role="button">Отзывы граждан</a>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
-            <a href="/admin/departments" class="btn btn-default" role="button">Отделы</a>
-        </div>
-    </div>
+</nav>
+<div class="container">
+
+</div>
 </body>
 </html>

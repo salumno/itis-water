@@ -1,5 +1,6 @@
 package ru.kpfu.itis.water.controllers.rest;
 
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.kpfu.itis.water.dto.NewsDto;
 import ru.kpfu.itis.water.dto.NewsImageDto;
@@ -30,7 +31,7 @@ public class NewsRestController {
     }
 
     @RequestMapping(value = "", method = RequestMethod.POST, headers = "content-type=multipart/*")
-    public List<NewsDto> addNews(@ModelAttribute NewsAddForm newsAddForm) {
+    public List<NewsDto> addNews(@Validated @ModelAttribute NewsAddForm newsAddForm) {
         newsService.addBrandNewNews(newsAddForm);
         return newsService.getAllDtoNews();
     }

@@ -1,5 +1,6 @@
 package ru.kpfu.itis.water.controllers;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -22,8 +23,9 @@ public class MainPageController {
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String getMainPage(@ModelAttribute("model")ModelMap model) {
+    public String getMainPage(@ModelAttribute("model")ModelMap model, Authentication authentication) {
         model.addAttribute("news", newsService.getLastNews(3));
+        model.addAttribute("isLoggedIn", authentication != null);
         return "main-page";
     }
 }

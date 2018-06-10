@@ -1,6 +1,8 @@
 package ru.kpfu.itis.water.controllers;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
@@ -33,7 +35,8 @@ public class RegistrationController {
     }
 
     @GetMapping("")
-    public String getRegistrationPage() {
+    public String getRegistrationPage(@ModelAttribute("model")ModelMap model, Authentication authentication) {
+        model.addAttribute("isLoggedIn", authentication != null);
         return "registration-page";
     }
 
