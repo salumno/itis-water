@@ -1,5 +1,6 @@
 package ru.kpfu.itis.water.controllers;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -36,17 +37,20 @@ public class AdminPageController {
         return "admin/panel-page";
     }
 
+    @PreAuthorize(value = "hasAnyAuthority('ADMIN', 'BOSS', 'PR')")
     @RequestMapping(value = "/news", method = RequestMethod.GET)
     public String getNewsPage() {
         return "admin/news-page";
     }
 
+    @PreAuthorize(value = "hasAnyAuthority('ADMIN', 'BOSS', 'PR')")
     @RequestMapping(value = "/news/{id}", method = RequestMethod.GET)
     public String getSpecificNewsPage(@ModelAttribute("model")ModelMap model, @PathVariable("id") Long newsId) {
         model.addAttribute("news", newsService.getNewsDtoById(newsId));
         return "admin/news-edit-page";
     }
 
+    @PreAuthorize(value = "hasAnyAuthority('ADMIN', 'BOSS', 'HR')")
     @RequestMapping(value = "/tickets", method = RequestMethod.GET)
     public String getTicketPage(@ModelAttribute("model")ModelMap model) {
         model.addAttribute("tickets", ticketService.getAllTickets());
@@ -54,12 +58,14 @@ public class AdminPageController {
         return "admin/tickets-page";
     }
 
+    @PreAuthorize(value = "hasAnyAuthority('ADMIN', 'BOSS', 'HR')")
     @RequestMapping(value = "/appointments", method = RequestMethod.GET)
     public String getAppointmentsPage(@ModelAttribute("model")ModelMap model) {
         model.addAttribute("appointments", appointmentService.getAllAppointments());
         return "admin/appointments-page";
     }
 
+    @PreAuthorize(value = "hasAnyAuthority('ADMIN', 'BOSS', 'HR')")
     @RequestMapping(value = "/employees", method = RequestMethod.GET)
     public String getEmployeesPage(@ModelAttribute("model")ModelMap model) {
         model.addAttribute("employees", employeeService.getAllDTOEmployees());
@@ -68,6 +74,7 @@ public class AdminPageController {
         return "admin/employees-page";
     }
 
+    @PreAuthorize(value = "hasAnyAuthority('ADMIN', 'BOSS', 'HR')")
     @RequestMapping(value = "/departments", method = RequestMethod.GET)
     public String getDepartmentsPage(@ModelAttribute("model")ModelMap model) {
         model.addAttribute("departments", departmentService.getAllDepartments());
