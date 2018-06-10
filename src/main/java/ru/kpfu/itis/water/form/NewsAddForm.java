@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -15,7 +16,9 @@ import org.springframework.web.multipart.MultipartFile;
 @Getter
 @Setter
 public class NewsAddForm {
+    @NotEmpty
     private String title;
+    @NotEmpty
     private String text;
     private MultipartFile[] files;
 }

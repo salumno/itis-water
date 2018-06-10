@@ -1,0 +1,131 @@
+body {
+    background-color: #dcf7ff;
+    font-family: "Fira Code", serif;
+}
+
+hr {
+    display: block;
+    margin: 0.5em auto;
+    border: 1px inset;
+}
+
+.title-center {
+    text-align: center;
+}
+
+@media all and (min-width: 400px) {
+
+    /*Form on login page*/
+    .login-form {
+        padding: 10px 0;
+    }
+
+    .login-form .alert {
+        margin: 0 auto;
+        max-width: 500px;
+    }
+
+    .login-form form {
+        margin: 0 auto;
+        max-width: 400px;
+    }
+
+    /*Form on registration page*/
+    .registration-form {
+        padding: 10px 0;
+    }
+
+    .registration-form .alert {
+        margin: 0 auto;
+        max-width: 500px;
+    }
+
+    .registration-form form {
+        margin: 0 auto;
+        max-width: 400px;
+    }
+
+    /*Form on ticket page*/
+    .ticket-form {
+        padding: 10px 0;
+    }
+
+    .ticket-form form {
+        margin: 0 auto;
+        max-width: 600px;
+    }
+
+    /*Ticket form on specific ticket page*/
+    .ticket-edit-form {
+        padding: 10px 0;
+        margin: 0 auto;
+        max-width: 1000px;
+    }
+
+    /*Ticket message form*/
+    .ticket-message-form {
+        padding: 10px 0;
+    }
+
+    .ticket-message-form .alert {
+        margin: 0 auto;
+        max-width: 1000px;
+    }
+
+    .ticket-message-form form {
+        margin: 0 auto;
+        max-width: 1000px;
+    }
+
+    /*Form for appointments adding*/
+    .appointment-form {
+        padding: 10px 0;
+    }
+
+    .appointment-form .alert {
+        margin: 0 auto;
+        max-width: 600px;
+    }
+
+    .appointment-form form {
+        margin: 0 auto;
+        max-width: 600px;
+    }
+
+    /*For appointment result table*/
+    .appointment-table {
+        padding: 10px 0;
+    }
+
+    .appointment-form .table {
+        margin: 0 auto;
+        max-width: 600px;
+    }
+
+    .employee-add-form form {
+        padding: 10px 0;
+        margin: 0 auto;
+        max-width: 600px;
+    }
+}
+
+.panel-success {
+    background-color: #d2ff37;
+}
+
+.panel-warning {
+    background-color: #ffab00;
+}
+
+.link {
+    font-weight: normal;
+    text-transform: uppercase;
+    color: #0f0f0f;
+}
+
+.btn {
+    color: black;
+    width: 100%;
+    text-transform: uppercase;
+    margin: 5px;
+}

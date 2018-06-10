@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import ru.kpfu.itis.water.form.TicketAddForm;
+import ru.kpfu.itis.water.security.roles.UserRole;
 import ru.kpfu.itis.water.services.TicketService;
+import ru.kpfu.itis.water.util.AuthenticationUtil;
 
 /**
  * Created by Melnikov Semen
@@ -20,9 +22,11 @@ import ru.kpfu.itis.water.services.TicketService;
 public class TicketController {
 
     private TicketService ticketService;
+    private AuthenticationUtil authenticationUtil;
 
-    public TicketController(TicketService ticketService) {
+    public TicketController(TicketService ticketService, AuthenticationUtil authenticationUtil) {
         this.ticketService = ticketService;
+        this.authenticationUtil = authenticationUtil;
     }
 
     @RequestMapping(value = "/tickets", method = RequestMethod.GET)
@@ -31,8 +35,9 @@ public class TicketController {
     }
 
     @RequestMapping(value = "/tickets/{id}", method = RequestMethod.GET)
-    public String getTicketPage(@PathVariable("id") Long ticketId, @ModelAttribute("model")ModelMap model) {
+    public String getTicketPage(@PathVariable("id") Long ticketId, Authentication authentication, @ModelAttribute("model")ModelMap model) {
         model.addAttribute("ticket", ticketService.getTicketById(ticketId).orElse(null));
+        model.addAttribute("isNotUser", !authenticationUtil.getUserDataByAuthentication(authentication).getUserRole().equals(UserRole.USER));
         return "ticket-page";
     }
 

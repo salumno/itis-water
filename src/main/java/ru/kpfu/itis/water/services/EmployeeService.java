@@ -4,6 +4,7 @@ import ru.kpfu.itis.water.dto.EmployeeDto;
 import ru.kpfu.itis.water.form.EmployeeAddForm;
 import ru.kpfu.itis.water.form.EmployeeUpdateForm;
 import ru.kpfu.itis.water.model.Employee;
+import ru.kpfu.itis.water.model.FileInfo;
 import ru.kpfu.itis.water.security.roles.UserRole;
 import ru.kpfu.itis.water.security.status.UserStatus;
 
@@ -18,15 +19,19 @@ public interface EmployeeService {
 
     Employee getEmployeeById(Long id);
 
-    void addNewEmployee(EmployeeAddForm form);
+    Employee addNewEmployee(EmployeeAddForm form);
 
     List<EmployeeDto> getAllDTOEmployees();
 
-    void updateEmployee(Long employeeId, EmployeeUpdateForm form);
+    Employee updateEmployee(Long employeeId, EmployeeUpdateForm form);
 
     UserStatus[] getEmployeeStatuses();
 
     UserRole[] getEmployeeRoles();
 
     EmployeeDto getEmployeeDTOById(Long employeeId);
+
+    List<EmployeeDto> getEmployeeDTOByNameFilterValue(String filterValue);
+
+    FileInfo generateEmployeesDoc();
 }

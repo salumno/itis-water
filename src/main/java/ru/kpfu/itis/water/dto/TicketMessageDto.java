@@ -3,7 +3,9 @@ package ru.kpfu.itis.water.dto;
 import lombok.*;
 import ru.kpfu.itis.water.model.TicketMessage;
 
-import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by Melnikov Semen
@@ -24,19 +26,26 @@ public class TicketMessageDto {
 
     private UserDto author;
 
-    private Date date;
+    private String date;
 
     private Long ticketId;
 
     private TicketMessageDto(TicketMessage ticketMessage) {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
         id = ticketMessage.getId();
         text = ticketMessage.getText();
-        author = UserDto.createOnTicketMessage(ticketMessage.getAuthor());
-        date = ticketMessage.getDate();
+        author = UserDto.from(ticketMessage.getAuthor());
+        date = formatter.format(ticketMessage.getDate());
         ticketId = ticketMessage.getTicket().getId();
     }
 
     public static TicketMessageDto createOnTicketMessage(TicketMessage ticketMessage) {
         return new TicketMessageDto(ticketMessage);
+    }
+
+    public static List<TicketMessageDto> createOnTicketMessages(List<TicketMessage> ticketMessages) {
+        return ticketMessages.stream()
+                .map(TicketMessageDto::createOnTicketMessage)
+                .collect(Collectors.toList());
     }
 }

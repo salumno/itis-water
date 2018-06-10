@@ -1,8 +1,12 @@
 package ru.kpfu.itis.water.controllers.rest;
 
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.kpfu.itis.water.dto.NewsDto;
+import ru.kpfu.itis.water.dto.NewsImageDto;
 import ru.kpfu.itis.water.form.NewsAddForm;
+import ru.kpfu.itis.water.form.NewsEditForm;
+import ru.kpfu.itis.water.form.NewsImageEditForm;
 import ru.kpfu.itis.water.services.NewsService;
 
 import java.util.List;
@@ -27,7 +31,7 @@ public class NewsRestController {
     }
 
     @RequestMapping(value = "", method = RequestMethod.POST, headers = "content-type=multipart/*")
-    public List<NewsDto> addNews(@ModelAttribute NewsAddForm newsAddForm) {
+    public List<NewsDto> addNews(@Validated @ModelAttribute NewsAddForm newsAddForm) {
         newsService.addBrandNewNews(newsAddForm);
         return newsService.getAllDtoNews();
     }
@@ -36,6 +40,25 @@ public class NewsRestController {
     public List<NewsDto> deleteNews(@PathVariable("newsId") Long newsId) {
         newsService.removeNewsById(newsId);
         return newsService.getAllDtoNews();
+    }
+
+    @PostMapping("/{id}/update")
+    public void editNews(@ModelAttribute NewsEditForm form,
+                         @PathVariable("id") Long newsId) {
+        newsService.editNewsById(newsId, form);
+    }
+
+    @PostMapping("/{id}/image")
+    public List<NewsImageDto> addImageToNews(@ModelAttribute NewsImageEditForm form,
+                                             @PathVariable("id") Long newsId) {
+        newsService.addImagesToNews(newsId, form);
+        return newsService.getImagesDtoByNewsId(newsId);
+    }
+
+    @PostMapping("/{newsId}/image/{imageId}/delete")
+    public List<NewsImageDto> deleteNewsImage(@PathVariable("newsId") Long newsId, @PathVariable("imageId") Long imageId) {
+        newsService.deleteNewsImage(newsId, imageId);
+        return newsService.getImagesDtoByNewsId(newsId);
     }
 
 }

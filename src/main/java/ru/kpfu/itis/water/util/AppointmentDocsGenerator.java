@@ -32,7 +32,7 @@ public class AppointmentDocsGenerator {
     public AppointmentDocsGenerator() {
         this.dateTimeFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss");
         BaseFont bf = BaseFont.createFont("/home/salumno/IdeaProjects/itis-water/src/main/resources/static/fonts/FreeSans.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
-        cyrillicFont = new Font(bf,18, Font.NORMAL);
+        cyrillicFont = new Font(bf,10, Font.NORMAL);
     }
 
     public FileInfo generateDocByAppointment(Appointment appointment) {
@@ -52,7 +52,7 @@ public class AppointmentDocsGenerator {
 
     @SneakyThrows
     private void writeDocToStorage(FileInfo fileInfo, Appointment appointment) {
-        Document document = new Document(PageSize.A4, 50, 50, 50, 50);
+        Document document = new Document(PageSize.A4, 20, 20, 20, 20);
         PdfWriter.getInstance(document, new FileOutputStream(fileInfo.getPath()));
         document.open();
         document.add(generateAppointmentHeader());

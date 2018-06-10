@@ -9,8 +9,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
@@ -37,22 +35,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/admin/*").hasAuthority("ADMIN")
-                .antMatchers("/user/*").authenticated()
+                .antMatchers("/admin/**").hasAnyAuthority("ADMIN", "PR", "HR", "BOSS")
+                .antMatchers("/user/**").authenticated()
+                .antMatchers("/api/**").authenticated()
+                .antMatchers("/api/admin/**").hasRole("ADMIN")
                 .antMatchers("/registration").permitAll()
                 .antMatchers("/css/*").permitAll()
                 .antMatchers("/").permitAll()
+                .antMatchers("/client/**").permitAll()
                 .and()
                 .formLogin().loginPage("/login")
                 .usernameParameter("login")
-                .defaultSuccessUrl("/")
+                .defaultSuccessUrl("/post-login")
                 .failureUrl("/login?error")
                 .permitAll()
                 .and()
                 .logout()
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/login")
-                .permitAll()
                 .logoutUrl("/logout")
                 .deleteCookies("remember-me")
                 .logoutSuccessUrl("/login")

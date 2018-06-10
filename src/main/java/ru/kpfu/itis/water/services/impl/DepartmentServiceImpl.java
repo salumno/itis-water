@@ -1,6 +1,8 @@
 package ru.kpfu.itis.water.services.impl;
 
 import org.springframework.stereotype.Service;
+import ru.kpfu.itis.water.form.DepartmentAddForm;
+import ru.kpfu.itis.water.form.DepartmentUpdateForm;
 import ru.kpfu.itis.water.model.Department;
 import ru.kpfu.itis.water.repositories.DepartmentRepository;
 import ru.kpfu.itis.water.services.DepartmentService;
@@ -24,5 +26,36 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public List<Department> getAllDepartments() {
         return departmentRepository.findAll();
+    }
+
+    @Override
+    public Department addDepartment(DepartmentAddForm form) {
+        Department department = Department.builder()
+                .name(form.getName())
+                .address(form.getAddress())
+                .build();
+        departmentRepository.save(department);
+        return department;
+    }
+
+    @Override
+    public void deleteDepartmentById(Long departmentId) {
+        departmentRepository.delete(departmentId);
+    }
+
+    @Override
+    public Department updateDepartment(Long departmentId, DepartmentUpdateForm form) {
+        Department department = getDepartmentById(departmentId);
+        department.setAddress(form.getUpdatedAddress());
+        department.setName(form.getUpdatedName());
+        departmentRepository.save(department);
+        return department;
+    }
+
+    @Override
+    public Department getDepartmentById(Long departmentId) {
+        return departmentRepository.findOneById(departmentId).orElseThrow(
+                () -> new IllegalArgumentException("Department with id " + departmentId + " does not exist.")
+        );
     }
 }
