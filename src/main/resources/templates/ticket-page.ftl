@@ -236,30 +236,32 @@
             var role = message.author.role;
             if (role === 'ADMIN') {
                 $('#ticket-messages').append(
-                        '<div class="panel">' +
-                            '<div class="panel-heading panel-info">' +
-                                '<div class="pull-right">' +
-                                    '<p>' + message.author.surname + ' ' + message.author.name + ' (Admin)</p>' +
-                                '</div>' +
-                                '<div class="pull-left">' +
-                                    '<p>' + message.date + '</p>' +
-                                '</div>' +
+                    '<div class="panel">' +
+                        '<div class="panel-heading panel-warning">' +
+                            '<div class="pull-right">' +
+                                '<p>' + message.author.surname + ' ' +  message.author.name + ' (Admin)</p>' +
                             '</div>' +
-                            '<div class="panel-body">' +
-                                '<p>' + message.text + '</p>' +
+                            '<div class="pull-left">' +
+                                '<p>' + message.date + '</p>' +
                             '</div>' +
-                        '</div>'
+                            '<div class="clearfix"></div>' +
+                        '</div>' +
+                        '<div class="panel-body">' +
+                            '<p>' + message.text + '</p>' +
+                        '</div>' +
+                    '</div>'
                 );
             } else {
                 $('#ticket-messages').append(
                         '<div class="panel">' +
-                            '<div class="panel-heading panel-success">' +
+                            '<div class="panel-heading panel-warning">' +
                                 '<div class="pull-left">' +
-                                    '<p>' + message.author.surname + ' ' + message.author.name + '</p>' +
+                                    '<p>' + message.author.surname + ' ' +  message.author.name + '</p>' +
                                 '</div>' +
                                 '<div class="pull-right">' +
                                     '<p>' + message.date + '</p>' +
                                 '</div>' +
+                                '<div class="clearfix"></div>' +
                             '</div>' +
                             '<div class="panel-body">' +
                                 '<p>' + message.text + '</p>' +
